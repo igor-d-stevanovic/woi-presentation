@@ -1,6 +1,22 @@
 // Jest setup file
 require('@testing-library/jest-dom');
 
+// Polyfill web APIs needed by some dependencies (supertest, playwright) in the Jest environment
+const { TextEncoder, TextDecoder } = require('util');
+const {
+  ReadableStream,
+  WritableStream,
+  TransformStream,
+  Blob,
+} = require('stream/web');
+
+if (!global.TextEncoder) global.TextEncoder = TextEncoder;
+if (!global.TextDecoder) global.TextDecoder = TextDecoder;
+if (!global.ReadableStream) global.ReadableStream = ReadableStream;
+if (!global.WritableStream) global.WritableStream = WritableStream;
+if (!global.TransformStream) global.TransformStream = TransformStream;
+if (!global.Blob) global.Blob = Blob;
+
 // Mark that we're in a Jest test environment
 global.jestTestEnvironment = true;
 

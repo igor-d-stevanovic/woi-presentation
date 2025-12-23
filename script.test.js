@@ -27,8 +27,9 @@ describe('TodoApp - Comprehensive Test Suite', () => {
   // Reset fetch mock to simulate API unavailable (resolved but not ok)
   global.fetch = jest.fn().mockResolvedValue({ ok: false, json: async () => ({ data: [] }) });
     
-    // Create app without auto-init for controlled testing
+    // Create app without auto-init for controlled testing and force local storage mode
     app = new TodoApp(false);
+    app.useApi = false;
   });
 
   afterEach(() => {

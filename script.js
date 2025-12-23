@@ -6,8 +6,8 @@ class TodoApp {
         this.maxNameLength = 200;
         this.validPriorities = ['1', '2', '3'];
         this.validStatuses = ['not started', 'in progress', 'completed'];
-        this.apiBaseUrl = '/api/tasks'; // API endpoint
-        this.useApi = true; // Try to use API by default
+    this.apiBaseUrl = '/api/tasks'; // API endpoint
+    this.useApi = autoInit; // Default to API only when auto-initializing
         
         if (autoInit) {
             this.init();
@@ -52,7 +52,7 @@ class TodoApp {
         }
     }
 
-    async addTodo() {
+    addTodo() {
         const nameInput = document.getElementById('todoName');
         if (!nameInput) {
             throw new Error('Name input element not found');
@@ -101,37 +101,40 @@ class TodoApp {
         };
 
         if (this.useApi) {
-            try {
-                const response = await fetch(this.apiBaseUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, priority, status })
-                });
-                
-                if (response.ok) {
-                    const result = await response.json();
-                    await this.loadTodos(); // Reload from API
-                } else {
-                    alert('Failed to add task via API');
-                    return false;
-                }
-            } catch (error) {
-                console.error('API error:', error);
-                alert('Failed to add task. Using localStorage fallback.');
-                this.useApi = false;
-                this.todos.push(newTodo);
-                this.saveTodos();
+            return this.addTodoViaApi({ name, priority, status }, newTodo);
+        }
+
+        this.todos.push(newTodo);
+        this.saveTodos();
+        this.render();
+        this.resetForm();
+        return true;
+    }
+
+    async addTodoViaApi(payload, fallbackTodo) {
+        try {
+            const response = await fetch(this.apiBaseUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            
+            if (response.ok) {
+                await this.loadTodos(); // Reload from API
+            } else {
+                alert('Failed to add task via API');
+                return false;
             }
-        } else {
-            this.todos.push(newTodo);
+        } catch (error) {
+            console.error('API error:', error);
+            alert('Failed to add task. Using localStorage fallback.');
+            this.useApi = false;
+            this.todos.push(fallbackTodo);
             this.saveTodos();
         }
-        
-        this.render();
 
-        // Reset form
+        this.render();
         this.resetForm();
-        
         return true;
     }
     
@@ -154,7 +157,7 @@ class TodoApp {
         }
     }
 
-    async deleteTodo(id) {
+    deleteTodo(id) {
         // Validate id
         if (id === null || id === undefined || typeof id !== 'number') {
             throw new Error('Invalid todo ID');
@@ -165,38 +168,42 @@ class TodoApp {
             return false;
         }
         
-        if (confirm('Are you sure you want to delete this item?')) {
-            if (this.useApi) {
-                try {
-                    const response = await fetch(`${this.apiBaseUrl}/${id}`, {
-                        method: 'DELETE'
-                    });
-                    
-                    if (response.ok) {
-                        await this.loadTodos();
-                        this.render();
-                        return true;
-                    } else {
-                        alert('Failed to delete task via API');
-                        return false;
-                    }
-                } catch (error) {
-                    console.error('API error:', error);
-                    this.useApi = false;
-                    this.todos = this.todos.filter(todo => todo.id !== id);
-                    this.saveTodos();
-                    this.render();
-                    return true;
-                }
-            } else {
-                this.todos = this.todos.filter(todo => todo.id !== id);
-                this.saveTodos();
+        if (!confirm('Are you sure you want to delete this item?')) {
+            return false;
+        }
+
+        if (this.useApi) {
+            return this.deleteTodoViaApi(id);
+        }
+
+        this.todos = this.todos.filter(todo => todo.id !== id);
+        this.saveTodos();
+        this.render();
+        return true;
+    }
+
+    async deleteTodoViaApi(id) {
+        try {
+            const response = await fetch(`${this.apiBaseUrl}/${id}`, {
+                method: 'DELETE'
+            });
+            
+            if (response.ok) {
+                await this.loadTodos();
                 this.render();
                 return true;
             }
+
+            alert('Failed to delete task via API');
+            return false;
+        } catch (error) {
+            console.error('API error:', error);
+            this.useApi = false;
+            this.todos = this.todos.filter(todo => todo.id !== id);
+            this.saveTodos();
+            this.render();
+            return true;
         }
-        
-        return false;
     }
 
     toggleEdit(id) {
@@ -404,23 +411,9 @@ class TodoApp {
         return true;
     }
 
-    async loadTodos() {
+    loadTodos() {
         if (this.useApi) {
-            try {
-                const response = await fetch(this.apiBaseUrl);
-                if (response.ok) {
-                    const result = await response.json();
-                    this.todos = result.data || [];
-                    console.log(`Loaded ${this.todos.length} todos from API`);
-                    return true;
-                } else {
-                    console.warn('API failed, falling back to localStorage');
-                    this.useApi = false;
-                }
-            } catch (error) {
-                console.error('Failed to load from API:', error);
-                this.useApi = false;
-            }
+            return this.loadTodosFromApi();
         }
         
         // Fallback to localStorage
@@ -440,6 +433,26 @@ class TodoApp {
             this.todos = [];
             return false;
         }
+    }
+
+    async loadTodosFromApi() {
+        try {
+            const response = await fetch(this.apiBaseUrl);
+            if (response.ok) {
+                const result = await response.json();
+                this.todos = result.data || [];
+                console.log(`Loaded ${this.todos.length} todos from API`);
+                return true;
+            }
+
+            console.warn('API failed, falling back to localStorage');
+            this.useApi = false;
+        } catch (error) {
+            console.error('Failed to load from API:', error);
+            this.useApi = false;
+        }
+
+        return this.loadTodos();
     }
 
     escapeHtml(text) {
@@ -465,25 +478,31 @@ class TodoApp {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
     
-    async clearAllTodos() {
-        if (confirm('Are you sure you want to delete all todos?')) {
-            if (this.useApi) {
-                // Delete all todos via API
-                const deletePromises = this.todos.map(todo => 
-                    fetch(`${this.apiBaseUrl}/${todo.id}`, { method: 'DELETE' })
-                );
-                await Promise.all(deletePromises);
-                await this.loadTodos();
-            } else {
-                this.todos = [];
-                this.saveTodos();
-            }
-            
-            this.currentEditingId = null;
-            this.render();
-            return true;
+    clearAllTodos() {
+        if (!confirm('Are you sure you want to delete all todos?')) {
+            return false;
         }
-        return false;
+
+        if (this.useApi) {
+            return this.clearAllTodosViaApi();
+        }
+
+        this.todos = [];
+        this.saveTodos();
+        this.currentEditingId = null;
+        this.render();
+        return true;
+    }
+
+    async clearAllTodosViaApi() {
+        const deletePromises = this.todos.map(todo => 
+            fetch(`${this.apiBaseUrl}/${todo.id}`, { method: 'DELETE' })
+        );
+        await Promise.all(deletePromises);
+        await this.loadTodos();
+        this.currentEditingId = null;
+        this.render();
+        return true;
     }
     
     getTodoById(id) {
