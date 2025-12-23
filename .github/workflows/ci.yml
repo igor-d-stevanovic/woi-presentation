@@ -12,13 +12,52 @@ on:
     branches: [main, develop]
 
 jobs:
-  unit-and-api-tests:
-    name: Unit & API Tests
+  tests:
+    name: "${{ matrix.name }}"
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
-        node-version: [18.x, 20.x]
+        include:
+          - test-group: unit
+            name: Unit Tests (Jest) [Node 18]
+            node-version: "18.x"
+            command: npm run test:unit
+            allure: false
+
+          - test-group: unit
+            name: Unit Tests (Jest) [Node 20]
+            node-version: "20.x"
+            command: npm run test:unit
+            allure: false
+
+          - test-group: api
+            name: API Tests (Jest) [Node 18]
+            node-version: "18.x"
+            command: npm run test:api
+            allure: false
+
+          - test-group: api
+            name: API Tests (Jest) [Node 20]
+            node-version: "20.x"
+            command: npm run test:api
+            allure: false
+
+          - test-group: e2e-python
+            name: E2E Tests (pytest + Playwright)
+            node-version: "20.x"
+            python-version: "3.13"
+            command: npm run test:e2e
+            allure: true
+            playwright-browsers: true
+
+          - test-group: e2e-js
+            name: Playwright JS Tests
+            node-version: "20.x"
+            command: npm run test:e2e:pw
+            allure: true
+            playwright-browsers: true
 
     steps:
       - name: Checkout code
@@ -30,110 +69,86 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run unit tests
-        run: npm run test:unit
-
-      - name: Run API tests
-        run: npm run test:api
-
-      - name: Upload coverage reports
-        if: matrix.node-version == '20.x'
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-reports
-          path: coverage/
-          retention-days: 30
-
-  e2e-tests:
-    name: E2E Tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20.x"
-          cache: "npm"
-
-      - name: Setup Python
+      - name: Setup Python ${{ matrix.python-version || '' }}
+        if: matrix.test-group == 'e2e-python'
         uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: ${{ matrix.python-version }}
           cache: "pip"
 
       - name: Install Node dependencies
         run: npm ci
 
       - name: Install Python dependencies
+        if: matrix.test-group == 'e2e-python'
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Install Playwright browsers
-        run: playwright install --with-deps chromium
+        if: matrix.playwright-browsers == 'true'
+        run: npx playwright install --with-deps chromium
 
       - name: Clean allure results
         run: rm -rf allure-results
 
-      - name: Run E2E tests
-        run: npm run test:e2e
-
-      - name: Run Playwright JS tests
-        run: npx playwright test --reporter=line
+      - name: Run ${{ matrix.name }}
+        run: ${{ matrix.command }}
 
       - name: Upload Allure results
-        if: always()
+        if: always() && matrix.allure == 'true' && hashFiles('allure-results/**') != ''
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results
+          name: allure-results-${{ matrix.test-group }}
           path: allure-results/
-          retention-days: 7
+          retention-days: 14
 
       - name: Upload Playwright report
-        if: always()
+        if: always() && matrix.test-group == 'e2e-js' && hashFiles('playwright-report/**') != ''
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
 
-      - name: Upload test results
-        if: always()
+      - name: Upload coverage reports
+        if: always() && matrix.test-group == 'unit' && matrix.node-version == '20.x' && hashFiles('coverage/**') != ''
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
-          path: test-results/
+          name: coverage-reports
+          path: coverage/
+          retention-days: 30
+
+      - name: Upload test reports
+        if: always() && hashFiles('test-reports/**') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports-${{ matrix.test-group }}-${{ matrix.node-version }}
+          path: test-reports/
           retention-days: 30
 
   test-summary:
     name: Test Summary
     runs-on: ubuntu-latest
-    needs: [unit-and-api-tests, e2e-tests]
+    needs: tests
     if: always()
 
     steps:
-      - name: Check test results
+      - name: Check matrix results
         run: |
-          echo "Unit & API Tests: ${{ needs.unit-and-api-tests.result }}"
-          echo "E2E Tests: ${{ needs.e2e-tests.result }}"
+          echo "Tests job result: ${{ needs.tests.result }}"
 
-          if [ "${{ needs.unit-and-api-tests.result }}" != "success" ] || [ "${{ needs.e2e-tests.result }}" != "success" ]; then
-            echo "❌ Some tests failed"
+          if [ "${{ needs.tests.result }}" != "success" ]; then
+            echo "❌ Some matrix runs failed"
             exit 1
           else
-            echo "✅ All tests passed"
+            echo "✅ All matrix runs passed"
           fi
 
   allure-report:
     name: Build Allure Report
     runs-on: ubuntu-latest
-    needs: [unit-and-api-tests, e2e-tests]
+    needs: tests
     if: always()
 
     steps:
@@ -152,7 +167,8 @@ jobs:
       - name: Download Allure results
         uses: actions/download-artifact@v4
         with:
-          name: allure-results
+          pattern: allure-results-*
+          merge-multiple: true
           path: allure-results
 
       - name: Generate Allure report
