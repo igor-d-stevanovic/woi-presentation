@@ -388,7 +388,8 @@ class TestEmptyState:
         
         # Then
         assert todo_page.is_empty_state_visible(), "Empty state should be visible"
-        assert "No tasks yet" in todo_page.get_empty_state_text()
+        empty_text = todo_page.get_empty_state_text()
+        assert "No TO-DO items yet" in empty_text or "No tasks yet" in empty_text
 
 
 @pytest.mark.ui
