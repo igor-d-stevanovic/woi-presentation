@@ -141,13 +141,13 @@ jobs:
           path: allure-report
           retention-days: 30
 
-      # Deploy PR previews to GitHub Pages in pr-preview branch
+      # Deploy PR previews to GitHub Pages in dedicated pr-preview branch
       - name: Deploy Allure report preview for PR
         if: github.event_name == 'pull_request'
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: allure-report
-          preview-branch: gh-pages
+          preview-branch: pr-preview
           umbrella-dir: pr-previews
           action: auto
 
