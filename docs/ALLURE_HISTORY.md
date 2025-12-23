@@ -126,14 +126,15 @@ Each test shows:
 - **Duration changes**: Increasing/decreasing execution time
 - **Flakiness indicator**: Tests that pass/fail intermittently
 
-### Retries
+### Retries (not configured in this setup)
 
-Allure tracks test retries and shows:
+Allure supports tracking test retries and can show, when retries are enabled in your test runner configuration:
 
 - Number of retry attempts
 - Success rate across retries
 - Time spent on retries
 
+> Note: The current Jest + Allure setup in this project does **not** configure or enable test retries, so this information will not appear in reports unless you add a retry mechanism and wire it into Allure.
 ## Best Practices
 
 ### 1. Consistent Test Names
