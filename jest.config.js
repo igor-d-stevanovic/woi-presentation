@@ -1,9 +1,9 @@
 module.exports = {
-  // Use jsdom environment for DOM testing
-  testEnvironment: 'jsdom',
+  // Use jsdom environment with Allure integration
+  testEnvironment: 'allure-jest/jsdom',
   
   // Setup files to run after jest is initialized
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js', '<rootDir>/jest.allure.setup.js'],
   
   // Reporters
   reporters: [
@@ -38,6 +38,8 @@ module.exports = {
     '**/__tests__/**/*.js',
     '**/?(*.)+(spec|test).js'
   ],
+
+  testPathIgnorePatterns: ['<rootDir>/e2e/'],
   
   // Transform files
   transform: {},
