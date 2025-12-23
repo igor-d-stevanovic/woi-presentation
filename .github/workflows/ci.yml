@@ -11,6 +11,7 @@ on:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
+  workflow_dispatch: # Allow manual trigger
 
 jobs:
   unit-tests:
@@ -160,4 +161,4 @@ jobs:
           publish_dir: ./allure-report
           publish_branch: gh-pages
           destination_dir: .
-          keep_files: true  # Keep pr-previews directory
+          keep_files: true # Keep pr-previews directory
