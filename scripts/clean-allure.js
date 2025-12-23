@@ -54,15 +54,15 @@ function cleanAllure(keepHistory = false) {
 
 // Parse command line arguments
 const args = process.argv.slice(2);
-const keepHistory = args.includes('--keep-history') || args.includes('-h');
+const keepHistory = args.includes('--keep-history') || args.includes('-k');
 
-if (args.includes('--help')) {
+if (args.includes('--help') || args.includes('-h')) {
   console.log(`
 Usage: node clean-allure.js [options]
 
 Options:
-  --keep-history, -h    Preserve history data for trend tracking
-  --help                Show this help message
+  --keep-history, -k    Preserve history data for trend tracking
+  --help, -h            Show this help message
 
 Examples:
   node clean-allure.js                Clean everything (fresh start)
