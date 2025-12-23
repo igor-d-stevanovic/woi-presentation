@@ -38,10 +38,22 @@ jobs:
       - name: Debug - List allure results
         if: always()
         run: |
-          echo "Contents of allure-results:"
-          ls -la allure-results/ || echo "Directory does not exist"
-          echo "Result count:"
-          find allure-results -name "*-result.json" 2>/dev/null | wc -l || echo "0"
+          echo "=== Working directory contents ==="
+          ls -la
+          echo ""
+          echo "=== Checking for allure-results directory ==="
+          if [ -d "allure-results" ]; then
+            echo "Directory exists. Contents:"
+            ls -la allure-results/
+            echo ""
+            echo "Result JSON files:"
+            find allure-results -name "*.json" -type f
+          else
+            echo "allure-results directory does NOT exist"
+          fi
+          echo ""
+          echo "=== Checking environment configuration ==="
+          cat jest.config.js | grep -A 3 "testEnvironment"
 
       - name: Ensure Allure results exist
         if: always()
