@@ -22,6 +22,11 @@ class AllureReporter {
     testResult.testResults.forEach((result) => {
       const testUuid = uuidv4();
       const testFile = path.basename(test.path);
+      const suiteName = result.ancestorTitles.join(' > ') || testFile;
+      
+      // Extract test category from test name (HAPPY PATH, FAILURE MODE, EDGE CASE)
+      const categoryMatch = result.title.match(/^(HAPPY PATH|FAILURE MODE|EDGE CASE):/);
+      const category = categoryMatch ? categoryMatch[1] : 'Test';
       
       const allureResult = {
         uuid: testUuid,
@@ -33,21 +38,29 @@ class AllureReporter {
         start: result.startTime || testResult.perfStats.start,
         stop: result.endTime || testResult.perfStats.end,
         duration: result.duration || 0,
+        description: `Test from ${testFile}\n\nFull path: ${result.fullName}`,
+        descriptionHtml: `<p><strong>Test file:</strong> ${testFile}</p><p><strong>Suite:</strong> ${suiteName}</p><p><strong>Category:</strong> ${category}</p>`,
         labels: [
-          { name: 'suite', value: result.ancestorTitles.join(' > ') || testFile },
+          { name: 'suite', value: suiteName },
+          { name: 'parentSuite', value: 'TodoApp - Unit Tests' },
+          { name: 'subSuite', value: result.ancestorTitles[result.ancestorTitles.length - 1] || testFile },
           { name: 'testClass', value: testFile },
           { name: 'testMethod', value: result.title },
           { name: 'package', value: path.dirname(test.path) },
           { name: 'framework', value: 'jest' },
-          { name: 'language', value: 'javascript' }
+          { name: 'language', value: 'javascript' },
+          { name: 'layer', value: 'unit' },
+          { name: 'tag', value: category.toLowerCase().replace(' ', '-') }
         ],
-        links: []
+        links: [],
+        parameters: [],
+        steps: this.generateSteps(result)
       };
 
       // Add failure details if test failed
       if (result.status === 'failed' && result.failureMessages) {
         allureResult.statusDetails = {
-          message: result.failureMessages[0],
+          message: result.failureMessages[0].split('\n')[0],
           trace: result.failureMessages.join('\n')
         };
       }
@@ -62,6 +75,37 @@ class AllureReporter {
         console.error(`[Allure] Failed to write result file: ${error.message}`);
       }
     });
+
+    // Write container file for the test suite
+    this.writeContainer(test, testResult);
+  }
+
+  writeContainer(test, testResult) {
+    const containerUuid = uuidv4();
+    const testFile = path.basename(test.path);
+    
+    // Group all tests from this file into a container
+    const children = testResult.testResults.map(result => {
+      // Find the corresponding result file (we'd need to track UUIDs, but for now we'll skip children)
+      return null;
+    }).filter(Boolean);
+
+    const container = {
+      uuid: containerUuid,
+      name: testFile.replace('.test.js', ' - Test Suite'),
+      start: testResult.perfStats.start,
+      stop: testResult.perfStats.end,
+      children: []  // We'll keep this simple for now
+    };
+
+    const containerFilename = `${containerUuid}-container.json`;
+    const containerPath = path.join(this.resultsDir, containerFilename);
+    
+    try {
+      fs.writeFileSync(containerPath, JSON.stringify(container, null, 2));
+    } catch (error) {
+      console.error(`[Allure] Failed to write container file: ${error.message}`);
+    }
   }
 
   onRunComplete() {
@@ -79,10 +123,58 @@ class AllureReporter {
     
     try {
       fs.writeFileSync(envPath, envContent);
+    } catch (error) {
+      console.error(`[Allure] Failed to write environment.properties: ${error.message}`);
+    }
+
+    // Write categories configuration
+    const categories = [
+      {
+        name: 'Happy Path Tests',
+        matchedStatuses: ['passed'],
+        messageRegex: '.*HAPPY PATH.*'
+      },
+      {
+        name: 'Failure Mode Tests',
+        matchedStatuses: ['passed'],
+        messageRegex: '.*FAILURE MODE.*'
+      },
+      {
+        name: 'Edge Case Tests',
+        matchedStatuses: ['passed'],
+        messageRegex: '.*EDGE CASE.*'
+      },
+      {
+        name: 'Test Failures',
+        matchedStatuses: ['failed']
+      }
+    ];
+
+    const categoriesPath = path.join(this.resultsDir, 'categories.json');
+    try {
+      fs.writeFileSync(categoriesPath, JSON.stringify(categories, null, 2));
+    } catch (error) {
+      console.error(`[Allure] Failed to write categories.json: ${error.message}`);
+    }
+
+    // Write executor info for better execution tracking
+    const executor = {
+      name: 'Jest',
+      type: 'jest',
+      buildName: `Test Run ${new Date().toISOString()}`,
+      buildUrl: process.env.GITHUB_SERVER_URL && process.env.GITHUB_REPOSITORY && process.env.GITHUB_RUN_ID
+        ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
+        : undefined,
+      reportUrl: process.env.ALLURE_REPORT_URL || undefined
+    };
+
+    const executorPath = path.join(this.resultsDir, 'executor.json');
+    try {
+      fs.writeFileSync(executorPath, JSON.stringify(executor, null, 2));
       console.log(`[Allure] Results written to ${this.resultsDir}/`);
       console.log(`[Allure] Files created: ${fs.readdirSync(this.resultsDir).length}`);
     } catch (error) {
-      console.error(`[Allure] Failed to write environment.properties: ${error.message}`);
+      console.error(`[Allure] Failed to write executor.json: ${error.message}`);
     }
   }
 
@@ -99,6 +191,48 @@ class AllureReporter {
       default:
         return 'unknown';
     }
+  }
+
+  generateSteps(result) {
+    // Generate synthetic steps based on test execution
+    const steps = [];
+    
+    // Step 1: Setup
+    steps.push({
+      name: 'Setup test environment',
+      status: 'passed',
+      stage: 'finished',
+      start: result.startTime || Date.now(),
+      stop: result.startTime ? result.startTime + 10 : Date.now() + 10
+    });
+
+    // Step 2: Execute test
+    const testDuration = result.duration || 0;
+    const executeStart = result.startTime ? result.startTime + 10 : Date.now() + 10;
+    steps.push({
+      name: `Execute: ${result.title.substring(0, 100)}`,
+      status: this.getStatus(result.status),
+      stage: 'finished',
+      start: executeStart,
+      stop: executeStart + Math.max(testDuration - 20, 10)
+    });
+
+    // Step 3: Assertions (if test passed or failed)
+    if (result.status === 'passed' || result.status === 'failed') {
+      const assertStart = executeStart + Math.max(testDuration - 20, 10);
+      steps.push({
+        name: result.status === 'passed' ? 'Verify expectations (passed)' : 'Verify expectations (failed)',
+        status: this.getStatus(result.status),
+        stage: 'finished',
+        start: assertStart,
+        stop: result.endTime || assertStart + 10,
+        statusDetails: result.status === 'failed' && result.failureMessages ? {
+          message: result.failureMessages[0].split('\n')[0]
+        } : undefined
+      });
+    }
+
+    return steps;
   }
 }
 
