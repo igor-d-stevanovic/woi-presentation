@@ -1,6 +1,10 @@
 module.exports = {
   // Use jsdom environment with Allure integration
   testEnvironment: 'allure-jest/jsdom',
+
+  testEnvironmentOptions: {
+    resultsDir: 'allure-results'
+  },
   
   // Setup files to run after jest is initialized
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js', '<rootDir>/jest.allure.setup.js'],
