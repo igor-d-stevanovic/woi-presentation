@@ -37,8 +37,17 @@ jobs:
           ALLURE_RESULTS_DIR: allure-results
         run: npm run test:unit
 
+      - name: Ensure Allure results exist
+        if: always()
+        run: |
+          mkdir -p allure-results
+          if [ -z "$(ls -A allure-results 2>/dev/null)" ]; then
+            echo "No Allure results were generated" >&2
+            exit 1
+          fi
+
       - name: Upload Allure results
-        if: always() && hashFiles('allure-results/**') != ''
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-results-unit
