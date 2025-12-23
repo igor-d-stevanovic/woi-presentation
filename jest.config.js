@@ -5,6 +5,17 @@ module.exports = {
   // Setup files to run after jest is initialized
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   
+  // Reporters
+  reporters: [
+    'default',
+    ['jest-html-reporters', {
+      publicPath: './test-reports',
+      filename: 'unit-tests.html',
+      expand: true,
+      pageTitle: 'Unit Test Report'
+    }]
+  ],
+  
   // Coverage configuration
   collectCoverageFrom: [
     'script.js',

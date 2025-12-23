@@ -57,5 +57,12 @@
     </div>
     
     <script src="script.js"></script>
+    <script>
+        // Initialize the app when DOM is ready
+        if (typeof TodoApp !== 'undefined') {
+            const app = new TodoApp();
+            window.app = app;
+        }
+    </script>
 </body>
 </html>

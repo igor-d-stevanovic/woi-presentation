@@ -17,6 +17,9 @@ coverage/
 *.coverage
 .nyc_output/
 htmlcov/
+allure-results/
+allure-report/
+test-reports/
 
 # Environment
 .env

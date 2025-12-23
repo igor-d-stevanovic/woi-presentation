@@ -10,17 +10,22 @@ const fs = require('fs');
 const path = require('path');
 
 // Load HTML and TodoApp class
-const html = fs.readFileSync(path.resolve(__dirname, 'index.html'), 'utf8');
+const htmlContent = fs.readFileSync(path.resolve(__dirname, 'index.html'), 'utf8');
+// Remove all script tags to prevent auto-execution in jsdom
+const html = htmlContent.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
 const TodoApp = require('./script.js');
 
 describe('TodoApp - Comprehensive Test Suite', () => {
   let app;
 
   beforeEach(() => {
-    // Arrange: Set up DOM and create fresh app instance
-    document.documentElement.innerHTML = html;
+  // Arrange: Set up DOM
+  document.documentElement.innerHTML = html;
     localStorage.clear();
     jest.clearAllMocks();
+    
+  // Reset fetch mock to simulate API unavailable (resolved but not ok)
+  global.fetch = jest.fn().mockResolvedValue({ ok: false, json: async () => ({ data: [] }) });
     
     // Create app without auto-init for controlled testing
     app = new TodoApp(false);

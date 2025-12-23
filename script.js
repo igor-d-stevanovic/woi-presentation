@@ -509,14 +509,10 @@ class TodoApp {
     }
 }
 
-// Initialize the app only if we're in a browser environment
-if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-    const app = new TodoApp();
-    // Make it globally accessible for inline event handlers
-    window.app = app;
-}
+// Don't auto-initialize - let index.html control initialization
+// This prevents issues during testing while allowing manual init in production
 
-// Export for testing
+// Export for testing and browser use
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = TodoApp;
 }
