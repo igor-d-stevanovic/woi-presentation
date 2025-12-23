@@ -7,6 +7,7 @@ class AllureReporter {
     this._globalConfig = globalConfig;
     this._options = options || {};
     this.resultsDir = this._options.resultsDir || 'allure-results';
+    this.testResults = new Map(); // Track test UUIDs by test file
     
     // Ensure results directory exists
     if (!fs.existsSync(this.resultsDir)) {
@@ -16,12 +17,16 @@ class AllureReporter {
 
   onRunStart() {
     console.log('[Allure] Starting test run...');
+    this.testResults.clear();
   }
 
   onTestResult(test, testResult) {
+    const testFile = path.basename(test.path);
+    const testUuids = [];
+
     testResult.testResults.forEach((result) => {
       const testUuid = uuidv4();
-      const testFile = path.basename(test.path);
+      testUuids.push(testUuid); // Track for container
       const suiteName = result.ancestorTitles.join(' > ') || testFile;
       
       // Extract test category from test name (HAPPY PATH, FAILURE MODE, EDGE CASE)
@@ -76,26 +81,23 @@ class AllureReporter {
       }
     });
 
+    // Store test UUIDs for this file
+    this.testResults.set(test.path, testUuids);
+
     // Write container file for the test suite
-    this.writeContainer(test, testResult);
+    this.writeContainer(test, testResult, testUuids);
   }
 
-  writeContainer(test, testResult) {
+  writeContainer(test, testResult, testUuids) {
     const containerUuid = uuidv4();
     const testFile = path.basename(test.path);
     
-    // Group all tests from this file into a container
-    const children = testResult.testResults.map(result => {
-      // Find the corresponding result file (we'd need to track UUIDs, but for now we'll skip children)
-      return null;
-    }).filter(Boolean);
-
     const container = {
       uuid: containerUuid,
       name: testFile.replace('.test.js', ' - Test Suite'),
       start: testResult.perfStats.start,
       stop: testResult.perfStats.end,
-      children: []  // We'll keep this simple for now
+      children: testUuids  // Use the actual test UUIDs
     };
 
     const containerFilename = `${containerUuid}-container.json`;
