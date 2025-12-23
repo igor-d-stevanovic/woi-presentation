@@ -1,13 +1,9 @@
 module.exports = {
-  // Use jsdom environment with Allure integration
-  testEnvironment: 'allure-jest/jsdom',
-
-  testEnvironmentOptions: {
-    resultsDir: 'allure-results'
-  },
+  // Use jsdom environment (not allure-jest - it doesn't work properly)
+  testEnvironment: 'jsdom',
   
   // Setup files to run after jest is initialized
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js', '<rootDir>/jest.allure.setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   
   // Reporters
   reporters: [
@@ -17,6 +13,9 @@ module.exports = {
       filename: 'unit-tests.html',
       expand: true,
       pageTitle: 'Unit Test Report'
+    }],
+    ['<rootDir>/allure-reporter.js', {
+      resultsDir: 'allure-results'
     }]
   ],
   

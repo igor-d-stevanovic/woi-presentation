@@ -1,21 +1,21 @@
-// Helper to wrap steps in Allure when available
-global.allureStep = async (name, fn) => {
-  const allure = global.allure;
-  if (!allure) return fn();
+const { allure } = require('jest-allure/dist/setup');
+
+// Helper function for adding steps
+global.allureStep = async (name, callback) => {
+  reporter.startStep(name);
   try {
-    allure.startStep(name);
-    const res = await fn();
-    allure.endStep('passed');
-    return res;
-  } catch (err) {
-    allure.endStep('failed');
-    throw err;
+    const result = await callback();
+    reporter.endStep('passed');
+    return result;
+  } catch (error) {
+    reporter.endStep('failed');
+    throw error;
   }
 };
 
+// Add labels to all tests
 beforeEach(() => {
-  if (global.allure) {
-    global.allure.label('layer', 'unit');
-    global.allure.epic('TodoApp');
-  }
+  reporter.epic('TodoApp');
+  reporter.feature('Unit Tests');
+  reporter.label('layer', 'unit');
 });
