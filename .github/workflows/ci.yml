@@ -85,9 +85,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Install Playwright browsers
-        if: matrix.playwright-browsers == 'true'
+      - name: Install Playwright browsers (Node)
+        if: matrix.test-group == 'e2e-js'
         run: npx playwright install --with-deps chromium
+
+      - name: Install Playwright browsers (Python)
+        if: matrix.test-group == 'e2e-python'
+        run: python -m playwright install chromium
 
       - name: Clean allure results
         run: rm -rf allure-results
