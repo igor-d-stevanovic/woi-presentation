@@ -33,6 +33,7 @@ class TodoPage:
         self.get_priority_radio(priority).check()
         self.status_select.select_option(status)
         self.add_button.click()
+        expect(self.get_task_by_name(name)).to_be_visible(timeout=3000)
         
     def get_task_by_name(self, name: str):
         """Get task element by name"""
@@ -106,6 +107,8 @@ class TodoPage:
             self.page.once("dialog", lambda dialog: dialog.dismiss())
         
         delete_button.click()
+        if confirm:
+            expect(self.get_task_by_name(task_name)).to_have_count(0, timeout=3000)
         
     def get_task_count(self) -> int:
         """Get the number of tasks in the list"""
