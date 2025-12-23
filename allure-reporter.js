@@ -39,7 +39,12 @@ class AllureReporter {
         historyFiles.forEach(file => {
           const srcPath = path.join(reportHistoryDir, file);
           const destPath = path.join(this.historyDir, file);
-          fs.copyFileSync(srcPath, destPath);
+          const stat = fs.statSync(srcPath);
+          if (stat.isFile()) {
+            fs.copyFileSync(srcPath, destPath);
+          } else if (stat.isDirectory() && typeof fs.cpSync === 'function') {
+            fs.cpSync(srcPath, destPath, { recursive: true });
+          }
         });
         console.log(`[Allure] Preserved ${historyFiles.length} history files`);
       } catch (error) {
