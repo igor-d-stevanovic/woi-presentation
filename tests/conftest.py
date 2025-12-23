@@ -11,8 +11,9 @@ import signal
 @pytest.fixture(scope="session")
 def browser():
     """Create a browser instance for the test session"""
+    headless_env = os.getenv("HEADLESS", "true").lower() == "true"
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)  # Set to True for CI/CD
+        browser = p.chromium.launch(headless=headless_env)
         yield browser
         browser.close()
 
