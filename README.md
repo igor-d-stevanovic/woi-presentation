@@ -112,6 +112,80 @@ npm run test:coverage
 npm run test:verbose
 ```
 
+## 📊 Allure Test Reports
+
+This project uses **Allure Framework** for generating rich, interactive test reports with detailed execution information.
+
+### Features
+
+- ✅ **111 individual test cases** with full details
+- ✅ **Execution tracking** with timestamps and build information
+- ✅ **Test categorization** (Happy Path, Failure Mode, Edge Case)
+- ✅ **Visual test steps** (Setup → Execute → Verify)
+- ✅ **Suite organization** with hierarchical structure
+- ✅ **Environment information** (Node version, platform, Jest version)
+
+### Generating Allure Reports Locally
+
+1. **Run tests** (generates `allure-results/`):
+```bash
+npm run test:unit
+```
+
+2. **Generate HTML report**:
+```bash
+npx allure generate allure-results --clean -o allure-report
+```
+
+3. **Open the report**:
+```bash
+npx allure open allure-report
+```
+
+Or combine steps 2 and 3:
+```bash
+npx allure serve allure-results
+```
+
+### Report Contents
+
+The Allure report includes:
+
+- **Overview**: Test execution summary with statistics
+- **Suites**: Organized by test file and describe blocks
+- **Categories**: Tests grouped by type (Happy Path, Failure Mode, Edge Case)
+- **Timeline**: Chronological view of test execution
+- **Behaviors**: Tests organized by feature/epic
+- **Graphs**: Visual representation of test results
+- **Execution Details**: For each test:
+  - Test name and description
+  - Execution status (passed/failed/skipped)
+  - Duration
+  - Test steps with timing
+  - Suite hierarchy
+  - Tags and labels
+
+### CI/CD Integration
+
+The project includes GitHub Actions workflow that:
+1. Runs unit tests automatically on push
+2. Generates Allure results (115 files per run)
+3. Creates HTML report
+4. Deploys to GitHub Pages
+
+View the latest report at: `https://<username>.github.io/<repo>/`
+
+### Custom Allure Reporter
+
+This project uses a **custom Jest reporter** (`allure-reporter.js`) because the standard `allure-jest` package has known issues with result generation. The custom reporter:
+
+- Generates proper Allure JSON format
+- Creates individual result files for each test
+- Adds execution metadata (executor.json)
+- Categorizes tests automatically
+- Generates synthetic test steps
+- Links container files correctly (no UUID errors)
+
 ## 📊 Test Suite Overview
 
 ### Test Statistics
@@ -547,13 +621,73 @@ To add new tests:
 5. Add proper assertions
 6. Update documentation
 
-## 📝 License
+## � Troubleshooting
+
+### Allure Report Issues
+
+**Problem**: "404 Test result with uid not found" errors in Allure report
+
+**Solution**: This was fixed by implementing proper UUID tracking in the custom reporter. If you see this error:
+- Ensure you're using the latest version of `allure-reporter.js`
+- Delete `allure-results/` and `allure-report/` directories
+- Re-run tests: `npm run test:unit`
+- Regenerate report: `npx allure generate allure-results --clean -o allure-report`
+
+**Problem**: No `allure-results/` directory generated
+
+**Solution**: The standard `allure-jest` package has known issues. This project uses a custom reporter:
+- Verify `allure-reporter.js` exists in the root directory
+- Check `jest.config.js` includes the reporter in the `reporters` array
+- Ensure `uuid` package is installed: `npm install --save-dev uuid`
+
+**Problem**: Allure report shows "No information about test execution"
+
+**Solution**: This is fixed by the `executor.json` file:
+- The custom reporter automatically generates this file
+- Verify `allure-results/executor.json` exists after running tests
+- Contains build name, timestamp, and optionally links to CI run
+
+### Test Execution Issues
+
+**Problem**: Tests fail in CI but pass locally
+
+**Solution**: 
+- Check Node.js version compatibility (project uses Node 20.x)
+- Ensure all dependencies are installed: `npm ci`
+- Clear Jest cache: `npx jest --clearCache`
+
+**Problem**: Coverage report not generated
+
+**Solution**:
+```bash
+npm run test:coverage
+# Report generated in coverage/ directory
+```
+
+## 📚 Additional Resources
+
+### Project Documentation
+
+- [API Documentation](./API_DOCUMENTATION.md) - Complete REST API reference
+- [Test Summary](./TEST_SUMMARY.md) - Detailed test results
+- [Test Documentation](./TEST_DOCUMENTATION.md) - Test implementation guide
+- [Test Patterns](./TEST_PATTERNS.md) - AAA pattern examples
+- [Project Checklist](./CHECKLIST.md) - Development progress
+
+### External Resources
+
+- [Jest Documentation](https://jestjs.io/)
+- [Allure Framework](https://allurereport.org/)
+- [Testing Best Practices](https://github.com/goldbergyoni/javascript-testing-best-practices)
+- [AAA Pattern Guide](https://wiki.c2.com/?ArrangeActAssert)
+
+## �📝 License
 
 This is a sample project for demonstration purposes.
 
 ## 👤 Author
 
-Created as a comprehensive example of frontend testing best practices.
+Created as a comprehensive example of frontend testing best practices with Allure reporting.
 
 ## ✨ Features Highlights
 
@@ -563,16 +697,20 @@ Created as a comprehensive example of frontend testing best practices.
 - ✅ Real-time updates
 - ✅ Data persistence
 - ✅ Responsive design
+- ✅ Status-based color highlighting
 
 ### Developer Features
 
 - ✅ 94.3% code coverage
-- ✅ 105 comprehensive tests
+- ✅ 155 comprehensive tests (111 unit + 44 API)
 - ✅ AAA pattern throughout
 - ✅ Complete documentation
 - ✅ Testable architecture
 - ✅ Error handling
-- ✅ Security features
+- ✅ Security features (XSS protection)
+- ✅ **Rich Allure test reports**
+- ✅ **Custom reporter implementation**
+- ✅ **CI/CD integration with GitHub Actions**
 
 ## 🎯 Project Goals Achieved
 
@@ -584,10 +722,16 @@ Created as a comprehensive example of frontend testing best practices.
 - ✅ Achieve High Code Coverage
 - ✅ Modify Code for Testability
 - ✅ Document Everything
+- ✅ **Generate Rich Test Reports with Allure**
+- ✅ **Implement Custom Allure Reporter**
+- ✅ **Deploy Reports to GitHub Pages**
 
 ---
 
 **Status**: ✅ All Tests Passing  
 **Coverage**: 94.3% Lines, 93.97% Statements  
-**Tests**: 105/105 Passing  
+**Frontend Tests**: 111/111 Passing  
+**API Tests**: 44/44 Passing  
+**Total Tests**: 155/155 Passing  
+**Allure Files Generated**: 115 (per test run)  
 **Last Updated**: December 23, 2025
