@@ -118,6 +118,7 @@ jobs:
         continue-on-error: true
         with:
           workflow: ci.yml
+          branch: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
           name: allure-history
           path: allure-results/history
           if_no_artifact_found: warn
