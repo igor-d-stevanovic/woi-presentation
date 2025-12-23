@@ -151,16 +151,27 @@ test.describe('TO-DO List Application - API Integration', () => {
   });
 
   test('Load existing tasks from API on startup', async ({ page }) => {
-    // Given the API has tasks stored
-    const testData = {
-      tasks: [
-        { id: 1, name: 'Existing Task 1', priority: '1', status: 'not started' },
-        { id: 2, name: 'Existing Task 2', priority: '2', status: 'in progress' },
-        { id: 3, name: 'Existing Task 3', priority: '3', status: 'completed' }
-      ],
-      nextId: 4
-    };
-    await fs.writeFile(tasksFile, JSON.stringify(testData, null, 2));
+    // Given the API has tasks stored (seed via API to ensure server memory and file are in sync)
+    const apiBase = 'http://localhost:3000/api/tasks';
+
+    // Clean existing tasks via API
+    const existing = await page.request.get(apiBase);
+    const body = await existing.json();
+    if (body?.data) {
+      for (const task of body.data) {
+        await page.request.delete(`${apiBase}/${task.id}`);
+      }
+    }
+
+    // Seed tasks through API (creates tasks.json and updates in-memory state)
+    const seed = [
+      { name: 'Existing Task 1', priority: '1', status: 'not started' },
+      { name: 'Existing Task 2', priority: '2', status: 'in progress' },
+      { name: 'Existing Task 3', priority: '3', status: 'completed' }
+    ];
+    for (const task of seed) {
+      await page.request.post(apiBase, { data: task });
+    }
 
     // Track GET requests
     const requests = [];
