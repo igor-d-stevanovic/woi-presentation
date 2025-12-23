@@ -162,3 +162,12 @@ jobs:
           publish_branch: gh-pages
           destination_dir: .
           keep_files: true # Keep pr-previews directory
+
+      - name: Add Allure report link to summary
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          echo "### 🎉 Allure Report Deployed!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📊 **View Report:** https://igor-d-stevanovic.github.io/woi-presentation/" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Report will be available in 1-2 minutes after GitHub Pages deployment completes." >> $GITHUB_STEP_SUMMARY
