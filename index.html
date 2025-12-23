@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO-DO List Application</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>TO-DO List</h1>
+        
+        <!-- Add New TO-DO Section -->
+        <div class="add-todo-section">
+            <h2>Add New TO-DO Item</h2>
+            
+            <div class="form-group">
+                <label for="todoName">Task Name:</label>
+                <input type="text" id="todoName" placeholder="Enter task name..." />
+            </div>
+            
+            <div class="form-group">
+                <label>Priority:</label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="priority" value="1" checked />
+                        <span>1 (Low)</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="priority" value="2" />
+                        <span>2 (Medium)</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="priority" value="3" />
+                        <span>3 (High)</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="todoStatus">Status:</label>
+                <select id="todoStatus">
+                    <option value="not started">Not Started</option>
+                    <option value="in progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+            
+            <button id="addTodoBtn" class="btn btn-primary">Add TO-DO Item</button>
+        </div>
+        
+        <!-- TO-DO List Section -->
+        <div class="todo-list-section">
+            <h2>Your TO-DO Items</h2>
+            <div id="todoList" class="todo-list"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

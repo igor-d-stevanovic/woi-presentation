@@ -1,0 +1,327 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    text-align: center;
+    color: #667eea;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 10px;
+}
+
+/* Add TO-DO Section */
+.add-todo-section {
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-group input[type="text"]:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.radio-label input[type="radio"] {
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.radio-label span {
+    font-weight: 500;
+}
+
+/* Buttons */
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background-color: #667eea;
+    color: white;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background-color: #5568d3;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 20px;
+    font-size: 14px;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
+}
+
+/* TO-DO List */
+.todo-list-section {
+    margin-top: 30px;
+}
+
+.todo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.todo-item {
+    background-color: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.todo-item:hover {
+    border-color: #667eea;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.todo-item.editing {
+    border-color: #667eea;
+    background-color: #f8f9ff;
+}
+
+/* Status Highlighting - New Feature */
+.todo-item.status-highlight-not-started {
+    border-left: 6px solid #dc3545;
+    background-color: #fff5f5;
+}
+
+.todo-item.status-highlight-in-progress {
+    border-left: 6px solid #ff8c00;
+    background-color: #fff9f0;
+}
+
+.todo-item.status-highlight-completed {
+    border-left: 6px solid #28a745;
+    background-color: #f0fff4;
+}
+
+.todo-item.status-highlight-not-started:hover {
+    border-left-color: #dc3545;
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.2);
+}
+
+.todo-item.status-highlight-in-progress:hover {
+    border-left-color: #ff8c00;
+    box-shadow: 0 5px 15px rgba(255, 140, 0, 0.2);
+}
+
+.todo-item.status-highlight-completed:hover {
+    border-left-color: #28a745;
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);
+}
+
+.todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.todo-name {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #333;
+}
+
+.todo-info {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.todo-priority,
+.todo-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.priority-badge,
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.priority-1 {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.priority-2 {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.priority-3 {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.status-not-started {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+.status-in-progress {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.status-completed {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Edit Controls */
+.edit-controls {
+    display: none;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #e0e0e0;
+}
+
+.edit-controls.visible {
+    display: block;
+}
+
+.edit-form-group {
+    margin-bottom: 15px;
+}
+
+.edit-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.edit-form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.edit-radio-group {
+    display: flex;
+    gap: 15px;
+}
+
+.edit-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+    font-size: 1.1em;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    .radio-group,
+    .edit-radio-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .todo-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
