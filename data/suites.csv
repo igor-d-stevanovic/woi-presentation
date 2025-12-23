@@ -1,0 +1,334 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods getTodoCount HAPPY PATH: should return correct count","907","HAPPY PATH: should return correct count","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getTodoCount","TodoApp - Comprehensive Test Suite > Utility Methods > getTodoCount","script.test.js","HAPPY PATH: should return correct count"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Deleting Todos FAILURE MODE: should throw error for non-number ID","907","FAILURE MODE: should throw error for non-number ID","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Deleting Todos","TodoApp - Comprehensive Test Suite > Deleting Todos","script.test.js","FAILURE MODE: should throw error for non-number ID"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Updating Todos FAILURE MODE: should throw error for non-number ID","907","FAILURE MODE: should throw error for non-number ID","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Updating Todos","TodoApp - Comprehensive Test Suite > Updating Todos","script.test.js","FAILURE MODE: should throw error for non-number ID"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods getTodosByPriority HAPPY PATH: should return todos with priority 2","907","HAPPY PATH: should return todos with priority 2","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getTodosByPriority","TodoApp - Comprehensive Test Suite > Utility Methods > getTodosByPriority","script.test.js","HAPPY PATH: should return todos with priority 2"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions getStatusClass HAPPY PATH: should keep single word status unchanged","907","HAPPY PATH: should keep single word status unchanged","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getStatusClass","TodoApp - Comprehensive Test Suite > Helper Functions > getStatusClass","script.test.js","HAPPY PATH: should keep single word status unchanged"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions escapeHtml EDGE CASE: should not double-escape","907","EDGE CASE: should not double-escape","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","escapeHtml","TodoApp - Comprehensive Test Suite > Helper Functions > escapeHtml","script.test.js","EDGE CASE: should not double-escape"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Deleting Todos HAPPY PATH: should not delete todo when cancelled","907","HAPPY PATH: should not delete todo when cancelled","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Deleting Todos","TodoApp - Comprehensive Test Suite > Deleting Todos","script.test.js","HAPPY PATH: should not delete todo when cancelled"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods getTodosByPriority HAPPY PATH: should return todos with priority 3","907","HAPPY PATH: should return todos with priority 3","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getTodosByPriority","TodoApp - Comprehensive Test Suite > Utility Methods > getTodosByPriority","script.test.js","HAPPY PATH: should return todos with priority 3"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Updating Todos HAPPY PATH: should update todo status","907","HAPPY PATH: should update todo status","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Updating Todos","TodoApp - Comprehensive Test Suite > Updating Todos","script.test.js","HAPPY PATH: should update todo status"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods getTodosByStatus HAPPY PATH: should return todos with ""completed"" status","907","HAPPY PATH: should return todos with ""completed"" status","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getTodosByStatus","TodoApp - Comprehensive Test Suite > Utility Methods > getTodosByStatus","script.test.js","HAPPY PATH: should return todos with ""completed"" status"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions capitalizeFirst HAPPY PATH: should capitalize first letter","907","HAPPY PATH: should capitalize first letter","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","capitalizeFirst","TodoApp - Comprehensive Test Suite > Helper Functions > capitalizeFirst","script.test.js","HAPPY PATH: should capitalize first letter"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Toggle Edit Mode HAPPY PATH: should switch edit mode to different todo","907","HAPPY PATH: should switch edit mode to different todo","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Toggle Edit Mode","TodoApp - Comprehensive Test Suite > Toggle Edit Mode","script.test.js","HAPPY PATH: should switch edit mode to different todo"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions capitalizeFirst EDGE CASE: should handle empty string","907","EDGE CASE: should handle empty string","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","capitalizeFirst","TodoApp - Comprehensive Test Suite > Helper Functions > capitalizeFirst","script.test.js","EDGE CASE: should handle empty string"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods getTodosByPriority EDGE CASE: should return empty array for invalid priority","907","EDGE CASE: should return empty array for invalid priority","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getTodosByPriority","TodoApp - Comprehensive Test Suite > Utility Methods > getTodosByPriority","script.test.js","EDGE CASE: should return empty array for invalid priority"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Updating Todos FAILURE MODE: should return false for non-existent todo","907","FAILURE MODE: should return false for non-existent todo","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Updating Todos","TodoApp - Comprehensive Test Suite > Updating Todos","script.test.js","FAILURE MODE: should return false for non-existent todo"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods getTodoCount EDGE CASE: should return 0 for empty list","907","EDGE CASE: should return 0 for empty list","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getTodoCount","TodoApp - Comprehensive Test Suite > Utility Methods > getTodoCount","script.test.js","EDGE CASE: should return 0 for empty list"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Deleting Todos FAILURE MODE: should return false for non-existent todo","907","FAILURE MODE: should return false for non-existent todo","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Deleting Todos","TodoApp - Comprehensive Test Suite > Deleting Todos","script.test.js","FAILURE MODE: should return false for non-existent todo"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Integration Tests COMPLETE WORKFLOW: add, edit, and delete todo","907","COMPLETE WORKFLOW: add, edit, and delete todo","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Integration Tests","TodoApp - Comprehensive Test Suite > Integration Tests","script.test.js","COMPLETE WORKFLOW: add, edit, and delete todo"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Rendering EDGE CASE: should escape HTML in todo names","907","EDGE CASE: should escape HTML in todo names","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Rendering","TodoApp - Comprehensive Test Suite > Rendering","script.test.js","EDGE CASE: should escape HTML in todo names"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions capitalizeFirst EDGE CASE: should handle non-string input","907","EDGE CASE: should handle non-string input","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","capitalizeFirst","TodoApp - Comprehensive Test Suite > Helper Functions > capitalizeFirst","script.test.js","EDGE CASE: should handle non-string input"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Deleting Todos HAPPY PATH: should delete todo when confirmed","907","HAPPY PATH: should delete todo when confirmed","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Deleting Todos","TodoApp - Comprehensive Test Suite > Deleting Todos","script.test.js","HAPPY PATH: should delete todo when confirmed"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods getTodosByStatus EDGE CASE: should return empty array for invalid status","907","EDGE CASE: should return empty array for invalid status","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getTodosByStatus","TodoApp - Comprehensive Test Suite > Utility Methods > getTodosByStatus","script.test.js","EDGE CASE: should return empty array for invalid status"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Rendering HAPPY PATH: should highlight ""in progress"" todos in orange","907","HAPPY PATH: should highlight ""in progress"" todos in orange","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Rendering","TodoApp - Comprehensive Test Suite > Rendering","script.test.js","HAPPY PATH: should highlight ""in progress"" todos in orange"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Updating Todos FAILURE MODE: should throw error for undefined ID","907","FAILURE MODE: should throw error for undefined ID","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Updating Todos","TodoApp - Comprehensive Test Suite > Updating Todos","script.test.js","FAILURE MODE: should throw error for undefined ID"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods clearAllTodos HAPPY PATH: should persist clear to localStorage","907","HAPPY PATH: should persist clear to localStorage","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","clearAllTodos","TodoApp - Comprehensive Test Suite > Utility Methods > clearAllTodos","script.test.js","HAPPY PATH: should persist clear to localStorage"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos FAILURE MODE: should throw error if name input element not found","907","FAILURE MODE: should throw error if name input element not found","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","FAILURE MODE: should throw error if name input element not found"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos FAILURE MODE: should not add todo with empty name","907","FAILURE MODE: should not add todo with empty name","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","FAILURE MODE: should not add todo with empty name"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Updating Todos HAPPY PATH: should update todo priority","907","HAPPY PATH: should update todo priority","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Updating Todos","TodoApp - Comprehensive Test Suite > Updating Todos","script.test.js","HAPPY PATH: should update todo priority"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Rendering HAPPY PATH: should update highlight color when status changes","907","HAPPY PATH: should update highlight color when status changes","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Rendering","TodoApp - Comprehensive Test Suite > Rendering","script.test.js","HAPPY PATH: should update highlight color when status changes"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions capitalizeFirst EDGE CASE: should handle null","907","EDGE CASE: should handle null","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","capitalizeFirst","TodoApp - Comprehensive Test Suite > Helper Functions > capitalizeFirst","script.test.js","EDGE CASE: should handle null"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Deleting Todos FAILURE MODE: should throw error for null ID","907","FAILURE MODE: should throw error for null ID","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Deleting Todos","TodoApp - Comprehensive Test Suite > Deleting Todos","script.test.js","FAILURE MODE: should throw error for null ID"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Deleting Todos HAPPY PATH: should persist deletion to localStorage","907","HAPPY PATH: should persist deletion to localStorage","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Deleting Todos","TodoApp - Comprehensive Test Suite > Deleting Todos","script.test.js","HAPPY PATH: should persist deletion to localStorage"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos EDGE CASE: should trim whitespace from task name","907","EDGE CASE: should trim whitespace from task name","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","EDGE CASE: should trim whitespace from task name"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos HAPPY PATH: should reset form after adding todo","907","HAPPY PATH: should reset form after adding todo","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","HAPPY PATH: should reset form after adding todo"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos FAILURE MODE: should handle invalid status gracefully","907","FAILURE MODE: should handle invalid status gracefully","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","FAILURE MODE: should handle invalid status gracefully"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos EDGE CASE: should handle special characters in task name","907","EDGE CASE: should handle special characters in task name","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","EDGE CASE: should handle special characters in task name"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Updating Todos EDGE CASE: should handle update when status select not found","907","EDGE CASE: should handle update when status select not found","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Updating Todos","TodoApp - Comprehensive Test Suite > Updating Todos","script.test.js","EDGE CASE: should handle update when status select not found"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Initialization EDGE CASE: should handle non-array data in localStorage","907","EDGE CASE: should handle non-array data in localStorage","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Initialization","TodoApp - Comprehensive Test Suite > Initialization","script.test.js","EDGE CASE: should handle non-array data in localStorage"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Updating Todos FAILURE MODE: should reject invalid status","907","FAILURE MODE: should reject invalid status","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Updating Todos","TodoApp - Comprehensive Test Suite > Updating Todos","script.test.js","FAILURE MODE: should reject invalid status"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos FAILURE MODE: should not add todo with whitespace-only name","907","FAILURE MODE: should not add todo with whitespace-only name","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","FAILURE MODE: should not add todo with whitespace-only name"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Deleting Todos EDGE CASE: should delete correct todo among many","907","EDGE CASE: should delete correct todo among many","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Deleting Todos","TodoApp - Comprehensive Test Suite > Deleting Todos","script.test.js","EDGE CASE: should delete correct todo among many"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods clearAllTodos HAPPY PATH: should clear all todos when confirmed","907","HAPPY PATH: should clear all todos when confirmed","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","clearAllTodos","TodoApp - Comprehensive Test Suite > Utility Methods > clearAllTodos","script.test.js","HAPPY PATH: should clear all todos when confirmed"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Updating Todos FAILURE MODE: should reject invalid priority","907","FAILURE MODE: should reject invalid priority","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Updating Todos","TodoApp - Comprehensive Test Suite > Updating Todos","script.test.js","FAILURE MODE: should reject invalid priority"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions escapeHtml EDGE CASE: should handle undefined input","907","EDGE CASE: should handle undefined input","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","escapeHtml","TodoApp - Comprehensive Test Suite > Helper Functions > escapeHtml","script.test.js","EDGE CASE: should handle undefined input"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods clearAllTodos HAPPY PATH: should not clear todos when cancelled","907","HAPPY PATH: should not clear todos when cancelled","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","clearAllTodos","TodoApp - Comprehensive Test Suite > Utility Methods > clearAllTodos","script.test.js","HAPPY PATH: should not clear todos when cancelled"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos HAPPY PATH: should add todo with priority 3 (High)","907","HAPPY PATH: should add todo with priority 3 (High)","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","HAPPY PATH: should add todo with priority 3 (High)"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions capitalizeFirst EDGE CASE: should handle undefined","907","EDGE CASE: should handle undefined","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","capitalizeFirst","TodoApp - Comprehensive Test Suite > Helper Functions > capitalizeFirst","script.test.js","EDGE CASE: should handle undefined"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions escapeHtml HAPPY PATH: should escape single quotes","907","HAPPY PATH: should escape single quotes","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","escapeHtml","TodoApp - Comprehensive Test Suite > Helper Functions > escapeHtml","script.test.js","HAPPY PATH: should escape single quotes"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Rendering HAPPY PATH: should display empty state when no todos","907","HAPPY PATH: should display empty state when no todos","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Rendering","TodoApp - Comprehensive Test Suite > Rendering","script.test.js","HAPPY PATH: should display empty state when no todos"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Updating Todos HAPPY PATH: should persist update to localStorage","907","HAPPY PATH: should persist update to localStorage","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Updating Todos","TodoApp - Comprehensive Test Suite > Updating Todos","script.test.js","HAPPY PATH: should persist update to localStorage"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods resetForm HAPPY PATH: should reset all form fields","907","HAPPY PATH: should reset all form fields","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","resetForm","TodoApp - Comprehensive Test Suite > Utility Methods > resetForm","script.test.js","HAPPY PATH: should reset all form fields"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos HAPPY PATH: should add todo with status ""in progress""","907","HAPPY PATH: should add todo with status ""in progress""","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","HAPPY PATH: should add todo with status ""in progress"""
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Deleting Todos EDGE CASE: should delete last remaining todo","907","EDGE CASE: should delete last remaining todo","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Deleting Todos","TodoApp - Comprehensive Test Suite > Deleting Todos","script.test.js","EDGE CASE: should delete last remaining todo"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Rendering HAPPY PATH: should show edit controls when editing","907","HAPPY PATH: should show edit controls when editing","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Rendering","TodoApp - Comprehensive Test Suite > Rendering","script.test.js","HAPPY PATH: should show edit controls when editing"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite LocalStorage Operations EDGE CASE: should save empty array","907","EDGE CASE: should save empty array","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","LocalStorage Operations","TodoApp - Comprehensive Test Suite > LocalStorage Operations","script.test.js","EDGE CASE: should save empty array"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Deleting Todos FAILURE MODE: should throw error for undefined ID","907","FAILURE MODE: should throw error for undefined ID","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Deleting Todos","TodoApp - Comprehensive Test Suite > Deleting Todos","script.test.js","FAILURE MODE: should throw error for undefined ID"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Updating Todos HAPPY PATH: should update both priority and status","907","HAPPY PATH: should update both priority and status","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Updating Todos","TodoApp - Comprehensive Test Suite > Updating Todos","script.test.js","HAPPY PATH: should update both priority and status"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Rendering EDGE CASE: should maintain highlight when todo is in edit mode","907","EDGE CASE: should maintain highlight when todo is in edit mode","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Rendering","TodoApp - Comprehensive Test Suite > Rendering","script.test.js","EDGE CASE: should maintain highlight when todo is in edit mode"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Integration Tests PERSISTENCE: todos should persist across app instances","907","PERSISTENCE: todos should persist across app instances","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Integration Tests","TodoApp - Comprehensive Test Suite > Integration Tests","script.test.js","PERSISTENCE: todos should persist across app instances"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos FAILURE MODE: should reject name exceeding max length","907","FAILURE MODE: should reject name exceeding max length","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","FAILURE MODE: should reject name exceeding max length"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Rendering HAPPY PATH: should render multiple todos","907","HAPPY PATH: should render multiple todos","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Rendering","TodoApp - Comprehensive Test Suite > Rendering","script.test.js","HAPPY PATH: should render multiple todos"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Rendering HAPPY PATH: should highlight ""completed"" todos in green","907","HAPPY PATH: should highlight ""completed"" todos in green","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Rendering","TodoApp - Comprehensive Test Suite > Rendering","script.test.js","HAPPY PATH: should highlight ""completed"" todos in green"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Updating Todos FAILURE MODE: should throw error for null ID","907","FAILURE MODE: should throw error for null ID","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Updating Todos","TodoApp - Comprehensive Test Suite > Updating Todos","script.test.js","FAILURE MODE: should throw error for null ID"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Toggle Edit Mode HAPPY PATH: should enable edit mode for todo","907","HAPPY PATH: should enable edit mode for todo","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Toggle Edit Mode","TodoApp - Comprehensive Test Suite > Toggle Edit Mode","script.test.js","HAPPY PATH: should enable edit mode for todo"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods getTodoById EDGE CASE: should return null for non-existent ID","907","EDGE CASE: should return null for non-existent ID","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getTodoById","TodoApp - Comprehensive Test Suite > Utility Methods > getTodoById","script.test.js","EDGE CASE: should return null for non-existent ID"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions escapeHtml EDGE CASE: should handle null input","907","EDGE CASE: should handle null input","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","escapeHtml","TodoApp - Comprehensive Test Suite > Helper Functions > escapeHtml","script.test.js","EDGE CASE: should handle null input"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos EDGE CASE: should generate unique IDs for todos","907","EDGE CASE: should generate unique IDs for todos","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","EDGE CASE: should generate unique IDs for todos"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions escapeHtml HAPPY PATH: should escape HTML tags","907","HAPPY PATH: should escape HTML tags","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","escapeHtml","TodoApp - Comprehensive Test Suite > Helper Functions > escapeHtml","script.test.js","HAPPY PATH: should escape HTML tags"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions getPriorityLabel HAPPY PATH: should return correct label for priority 2","907","HAPPY PATH: should return correct label for priority 2","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getPriorityLabel","TodoApp - Comprehensive Test Suite > Helper Functions > getPriorityLabel","script.test.js","HAPPY PATH: should return correct label for priority 2"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite LocalStorage Operations HAPPY PATH: should save todos to localStorage","907","HAPPY PATH: should save todos to localStorage","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","LocalStorage Operations","TodoApp - Comprehensive Test Suite > LocalStorage Operations","script.test.js","HAPPY PATH: should save todos to localStorage"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions getPriorityLabel EDGE CASE: should return default for invalid priority","907","EDGE CASE: should return default for invalid priority","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getPriorityLabel","TodoApp - Comprehensive Test Suite > Helper Functions > getPriorityLabel","script.test.js","EDGE CASE: should return default for invalid priority"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions getPriorityLabel HAPPY PATH: should return correct label for priority 1","907","HAPPY PATH: should return correct label for priority 1","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getPriorityLabel","TodoApp - Comprehensive Test Suite > Helper Functions > getPriorityLabel","script.test.js","HAPPY PATH: should return correct label for priority 1"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Rendering HAPPY PATH: should not show edit controls when not editing","907","HAPPY PATH: should not show edit controls when not editing","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Rendering","TodoApp - Comprehensive Test Suite > Rendering","script.test.js","HAPPY PATH: should not show edit controls when not editing"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions capitalizeFirst EDGE CASE: should handle single character","907","EDGE CASE: should handle single character","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","capitalizeFirst","TodoApp - Comprehensive Test Suite > Helper Functions > capitalizeFirst","script.test.js","EDGE CASE: should handle single character"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Integration Tests BULK OPERATIONS: add and delete multiple todos","907","BULK OPERATIONS: add and delete multiple todos","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Integration Tests","TodoApp - Comprehensive Test Suite > Integration Tests","script.test.js","BULK OPERATIONS: add and delete multiple todos"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos EDGE CASE: should accept name at exactly max length","907","EDGE CASE: should accept name at exactly max length","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","EDGE CASE: should accept name at exactly max length"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos EDGE CASE: should add multiple todos sequentially","907","EDGE CASE: should add multiple todos sequentially","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","EDGE CASE: should add multiple todos sequentially"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions capitalizeFirst HAPPY PATH: should not change already capitalized string","907","HAPPY PATH: should not change already capitalized string","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","capitalizeFirst","TodoApp - Comprehensive Test Suite > Helper Functions > capitalizeFirst","script.test.js","HAPPY PATH: should not change already capitalized string"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Toggle Edit Mode HAPPY PATH: should disable edit mode when toggling same todo","907","HAPPY PATH: should disable edit mode when toggling same todo","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Toggle Edit Mode","TodoApp - Comprehensive Test Suite > Toggle Edit Mode","script.test.js","HAPPY PATH: should disable edit mode when toggling same todo"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions escapeHtml EDGE CASE: should handle numbers","907","EDGE CASE: should handle numbers","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","escapeHtml","TodoApp - Comprehensive Test Suite > Helper Functions > escapeHtml","script.test.js","EDGE CASE: should handle numbers"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions getStatusClass HAPPY PATH: should convert ""in progress"" to ""in-progress""","907","HAPPY PATH: should convert ""in progress"" to ""in-progress""","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getStatusClass","TodoApp - Comprehensive Test Suite > Helper Functions > getStatusClass","script.test.js","HAPPY PATH: should convert ""in progress"" to ""in-progress"""
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos EDGE CASE: should handle unicode characters in task name","907","EDGE CASE: should handle unicode characters in task name","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","EDGE CASE: should handle unicode characters in task name"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions getStatusClass EDGE CASE: should handle multiple spaces","907","EDGE CASE: should handle multiple spaces","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getStatusClass","TodoApp - Comprehensive Test Suite > Helper Functions > getStatusClass","script.test.js","EDGE CASE: should handle multiple spaces"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Toggle Edit Mode EDGE CASE: should handle toggle on non-existent todo","907","EDGE CASE: should handle toggle on non-existent todo","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Toggle Edit Mode","TodoApp - Comprehensive Test Suite > Toggle Edit Mode","script.test.js","EDGE CASE: should handle toggle on non-existent todo"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite LocalStorage Operations FAILURE MODE: should handle localStorage save error","907","FAILURE MODE: should handle localStorage save error","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","LocalStorage Operations","TodoApp - Comprehensive Test Suite > LocalStorage Operations","script.test.js","FAILURE MODE: should handle localStorage save error"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Rendering EDGE CASE: should handle render when todoList element not found","907","EDGE CASE: should handle render when todoList element not found","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Rendering","TodoApp - Comprehensive Test Suite > Rendering","script.test.js","EDGE CASE: should handle render when todoList element not found"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods getTodosByPriority HAPPY PATH: should return todos with priority 1","907","HAPPY PATH: should return todos with priority 1","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getTodosByPriority","TodoApp - Comprehensive Test Suite > Utility Methods > getTodosByPriority","script.test.js","HAPPY PATH: should return todos with priority 1"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions escapeHtml HAPPY PATH: should escape quotes","907","HAPPY PATH: should escape quotes","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","escapeHtml","TodoApp - Comprehensive Test Suite > Helper Functions > escapeHtml","script.test.js","HAPPY PATH: should escape quotes"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods getTodosByStatus HAPPY PATH: should return todos with ""not started"" status","907","HAPPY PATH: should return todos with ""not started"" status","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getTodosByStatus","TodoApp - Comprehensive Test Suite > Utility Methods > getTodosByStatus","script.test.js","HAPPY PATH: should return todos with ""not started"" status"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods resetForm EDGE CASE: should handle missing form elements gracefully","907","EDGE CASE: should handle missing form elements gracefully","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","resetForm","TodoApp - Comprehensive Test Suite > Utility Methods > resetForm","script.test.js","EDGE CASE: should handle missing form elements gracefully"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions escapeHtml HAPPY PATH: should escape ampersands","907","HAPPY PATH: should escape ampersands","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","escapeHtml","TodoApp - Comprehensive Test Suite > Helper Functions > escapeHtml","script.test.js","HAPPY PATH: should escape ampersands"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Rendering HAPPY PATH: should render single todo","907","HAPPY PATH: should render single todo","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Rendering","TodoApp - Comprehensive Test Suite > Rendering","script.test.js","HAPPY PATH: should render single todo"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods getTodosByStatus HAPPY PATH: should return todos with ""in progress"" status","907","HAPPY PATH: should return todos with ""in progress"" status","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getTodosByStatus","TodoApp - Comprehensive Test Suite > Utility Methods > getTodosByStatus","script.test.js","HAPPY PATH: should return todos with ""in progress"" status"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions getPriorityLabel HAPPY PATH: should return correct label for priority 3","907","HAPPY PATH: should return correct label for priority 3","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getPriorityLabel","TodoApp - Comprehensive Test Suite > Helper Functions > getPriorityLabel","script.test.js","HAPPY PATH: should return correct label for priority 3"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos HAPPY PATH: should persist todo to localStorage","907","HAPPY PATH: should persist todo to localStorage","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","HAPPY PATH: should persist todo to localStorage"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite LocalStorage Operations HAPPY PATH: should load todos from localStorage","907","HAPPY PATH: should load todos from localStorage","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","LocalStorage Operations","TodoApp - Comprehensive Test Suite > LocalStorage Operations","script.test.js","HAPPY PATH: should load todos from localStorage"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Initialization HAPPY PATH: should initialize with default values","907","HAPPY PATH: should initialize with default values","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Initialization","TodoApp - Comprehensive Test Suite > Initialization","script.test.js","HAPPY PATH: should initialize with default values"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Deleting Todos EDGE CASE: should handle deletion from empty list","907","EDGE CASE: should handle deletion from empty list","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Deleting Todos","TodoApp - Comprehensive Test Suite > Deleting Todos","script.test.js","EDGE CASE: should handle deletion from empty list"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos HAPPY PATH: should add todo with priority 2 (Medium)","907","HAPPY PATH: should add todo with priority 2 (Medium)","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","HAPPY PATH: should add todo with priority 2 (Medium)"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Rendering HAPPY PATH: should apply correct highlight to multiple todos with different statuses","907","HAPPY PATH: should apply correct highlight to multiple todos with different statuses","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Rendering","TodoApp - Comprehensive Test Suite > Rendering","script.test.js","HAPPY PATH: should apply correct highlight to multiple todos with different statuses"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos HAPPY PATH: should add a todo with valid input","907","HAPPY PATH: should add a todo with valid input","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","HAPPY PATH: should add a todo with valid input"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Initialization EDGE CASE: should handle null/undefined localStorage gracefully","907","EDGE CASE: should handle null/undefined localStorage gracefully","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Initialization","TodoApp - Comprehensive Test Suite > Initialization","script.test.js","EDGE CASE: should handle null/undefined localStorage gracefully"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Initialization FAILURE MODE: should handle corrupted localStorage data gracefully","907","FAILURE MODE: should handle corrupted localStorage data gracefully","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Initialization","TodoApp - Comprehensive Test Suite > Initialization","script.test.js","FAILURE MODE: should handle corrupted localStorage data gracefully"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Adding Todos HAPPY PATH: should add todo with status ""completed""","907","HAPPY PATH: should add todo with status ""completed""","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Adding Todos","TodoApp - Comprehensive Test Suite > Adding Todos","script.test.js","HAPPY PATH: should add todo with status ""completed"""
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions getStatusClass HAPPY PATH: should convert ""not started"" to ""not-started""","907","HAPPY PATH: should convert ""not started"" to ""not-started""","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getStatusClass","TodoApp - Comprehensive Test Suite > Helper Functions > getStatusClass","script.test.js","HAPPY PATH: should convert ""not started"" to ""not-started"""
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Rendering HAPPY PATH: should highlight ""not started"" todos in red","907","HAPPY PATH: should highlight ""not started"" todos in red","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Rendering","TodoApp - Comprehensive Test Suite > Rendering","script.test.js","HAPPY PATH: should highlight ""not started"" todos in red"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Updating Todos HAPPY PATH: should clear editing mode after update","907","HAPPY PATH: should clear editing mode after update","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Updating Todos","TodoApp - Comprehensive Test Suite > Updating Todos","script.test.js","HAPPY PATH: should clear editing mode after update"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions getPriorityLabel EDGE CASE: should return default for undefined","907","EDGE CASE: should return default for undefined","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getPriorityLabel","TodoApp - Comprehensive Test Suite > Helper Functions > getPriorityLabel","script.test.js","EDGE CASE: should return default for undefined"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Initialization HAPPY PATH: should load existing todos from localStorage on init","907","HAPPY PATH: should load existing todos from localStorage on init","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","Initialization","TodoApp - Comprehensive Test Suite > Initialization","script.test.js","HAPPY PATH: should load existing todos from localStorage on init"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Utility Methods getTodoById HAPPY PATH: should return todo by ID","907","HAPPY PATH: should return todo by ID","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","getTodoById","TodoApp - Comprehensive Test Suite > Utility Methods > getTodoById","script.test.js","HAPPY PATH: should return todo by ID"
+"Test from script.test.js
+
+Full path: TodoApp - Comprehensive Test Suite Helper Functions escapeHtml EDGE CASE: should handle empty string","907","EDGE CASE: should handle empty string","TodoApp - Unit Tests","2025-12-23","passed","2025-12-23","escapeHtml","TodoApp - Comprehensive Test Suite > Helper Functions > escapeHtml","script.test.js","EDGE CASE: should handle empty string"
