@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "test:unit": "jest --config jest.config.js script.test.js",
+    "test:unit:coverage": "jest --config jest.config.js script.test.js --coverage",
     "test:api": "jest --config jest.api.config.js",
     "test:e2e": "pytest tests/ -v",
     "test:e2e:pw": "playwright test",
@@ -21,6 +22,7 @@
     "allure:clean": "node scripts/clean-allure.js",
     "allure:clean:keep-history": "node scripts/clean-allure.js --keep-history",
     "test:unit:trends": "npm run allure:clean:keep-history && npm run test:unit && npm run allure:generate:preserve",
+    "test:unit:coverage:report": "npm run allure:clean:keep-history && npm run test:unit:coverage && npm run allure:generate:preserve",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:verbose": "jest --verbose",
@@ -40,6 +42,7 @@
     "allure-jest": "^3.4.3",
     "allure-playwright": "^3.4.3",
     "jest": "^30.2.0",
+    "jest-coverage-badges": "^1.1.2",
     "jest-environment-jsdom": "^30.2.0",
     "jest-html-reporters": "^3.1.7",
     "supertest": "^7.1.4",

@@ -25,6 +25,12 @@ module.exports = {
     '!node_modules/**',
     '!coverage/**'
   ],
+
+  // Coverage reporters
+  coverageReporters: ['json', 'json-summary', 'lcov', 'text', 'html'],
+  
+  // Coverage directory
+  coverageDirectory: 'coverage',
   
   // Coverage thresholds
   coverageThreshold: {
