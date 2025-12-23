@@ -1,9 +1,10 @@
 name: CI - Unit Tests with Allure
 
 permissions:
-  contents: read
+  contents: write # Allow pr-preview-action to push to gh-pages
   pages: write
   id-token: write
+  pull-requests: write # Allow pr-preview-action to comment on PRs
 
 on:
   push:
@@ -112,25 +113,51 @@ jobs:
           name: allure-results-unit
           path: allure-results
 
-      - name: Generate Allure report
-        run: npx allure generate allure-results --clean -o allure-report
-
-      - name: Upload Allure Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Download previous Allure history
+        uses: dawidd6/action-download-artifact@v3
+        continue-on-error: true
         with:
+          workflow: ci.yml
+          branch: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
+          name: allure-history
+          path: allure-results/history
+          if_no_artifact_found: warn
+
+      - name: Generate Allure report with history
+        run: npx allure generate allure-results -o allure-report
+
+      - name: Upload Allure history
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-history
+          path: allure-report/history
+          retention-days: 90
+          if-no-files-found: ignore
+
+      - name: Upload Allure report (for preview)
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
           path: allure-report
+          retention-days: 30
 
-  deploy-allure:
-    name: Deploy Allure to GitHub Pages
-    runs-on: ubuntu-latest
-    needs: allure-report
-    if: always()
+      # Deploy PR previews to GitHub Pages in dedicated pr-preview branch
+      - name: Deploy Allure report preview for PR
+        if: github.event_name == 'pull_request'
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: allure-report
+          preview-branch: pr-preview
+          umbrella-dir: pr-previews
+          action: auto
 
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      # Deploy main branch to root of gh-pages
+      - name: Deploy to GitHub Pages (main branch)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
+          publish_branch: gh-pages
+          destination_dir: .
+          keep_files: true  # Keep pr-previews directory

@@ -1,12 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
 
 class AllureReporter {
   constructor(globalConfig, options) {
     this._globalConfig = globalConfig;
     this._options = options || {};
     this.resultsDir = this._options.resultsDir || 'allure-results';
+    this.historyDir = path.join(this.resultsDir, 'history');
     this.testResults = new Map(); // Track test UUIDs by test file
     
     // Ensure results directory exists
@@ -18,6 +20,45 @@ class AllureReporter {
   onRunStart() {
     console.log('[Allure] Starting test run...');
     this.testResults.clear();
+    
+    // Preserve history from previous report if it exists
+    this.preserveHistory();
+  }
+
+  preserveHistory() {
+    const reportHistoryDir = path.join('allure-report', 'history');
+    
+    if (fs.existsSync(reportHistoryDir)) {
+      // Copy history from previous report to current results
+      if (!fs.existsSync(this.historyDir)) {
+        fs.mkdirSync(this.historyDir, { recursive: true });
+      }
+      
+      try {
+        const historyFiles = fs.readdirSync(reportHistoryDir);
+        historyFiles.forEach(file => {
+          const srcPath = path.join(reportHistoryDir, file);
+          const destPath = path.join(this.historyDir, file);
+          const stat = fs.statSync(srcPath);
+          if (stat.isFile()) {
+            fs.copyFileSync(srcPath, destPath);
+          } else if (stat.isDirectory() && typeof fs.cpSync === 'function') {
+            fs.cpSync(srcPath, destPath, { recursive: true });
+          }
+        });
+        console.log(`[Allure] Preserved ${historyFiles.length} history files`);
+      } catch (error) {
+        console.warn(`[Allure] Could not preserve history: ${error.message}`);
+      }
+    } else {
+      console.log('[Allure] No previous history found, starting fresh');
+    }
+  }
+
+  generateHistoryId(testName, suiteName) {
+    // Generate consistent hash for history tracking
+    const fullName = `${suiteName} > ${testName}`;
+    return crypto.createHash('md5').update(fullName).digest('hex');
   }
 
   onTestResult(test, testResult) {
@@ -33,9 +74,12 @@ class AllureReporter {
       const categoryMatch = result.title.match(/^(HAPPY PATH|FAILURE MODE|EDGE CASE):/);
       const category = categoryMatch ? categoryMatch[1] : 'Test';
       
+      // Generate consistent historyId for trend tracking
+      const historyId = this.generateHistoryId(result.title, suiteName);
+      
       const allureResult = {
         uuid: testUuid,
-        historyId: result.fullName,
+        historyId: historyId,
         name: result.title,
         fullName: result.fullName,
         status: this.getStatus(result.status),

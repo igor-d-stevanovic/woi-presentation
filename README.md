@@ -128,21 +128,25 @@ This project uses **Allure Framework** for generating rich, interactive test rep
 ### Generating Allure Reports Locally
 
 1. **Run tests** (generates `allure-results/`):
+
 ```bash
 npm run test:unit
 ```
 
 2. **Generate HTML report**:
+
 ```bash
 npx allure generate allure-results --clean -o allure-report
 ```
 
 3. **Open the report**:
+
 ```bash
 npx allure open allure-report
 ```
 
 Or combine steps 2 and 3:
+
 ```bash
 npx allure serve allure-results
 ```
@@ -168,6 +172,7 @@ The Allure report includes:
 ### CI/CD Integration
 
 The project includes GitHub Actions workflow that:
+
 1. Runs unit tests automatically on push
 2. Generates Allure results (115 files per run)
 3. Creates HTML report
@@ -628,6 +633,7 @@ To add new tests:
 **Problem**: "404 Test result with uid not found" errors in Allure report
 
 **Solution**: This was fixed by implementing proper UUID tracking in the custom reporter. If you see this error:
+
 - Ensure you're using the latest version of `allure-reporter.js`
 - Delete `allure-results/` and `allure-report/` directories
 - Re-run tests: `npm run test:unit`
@@ -636,6 +642,7 @@ To add new tests:
 **Problem**: No `allure-results/` directory generated
 
 **Solution**: The standard `allure-jest` package has known issues. This project uses a custom reporter:
+
 - Verify `allure-reporter.js` exists in the root directory
 - Check `jest.config.js` includes the reporter in the `reporters` array
 - Ensure `uuid` package is installed: `npm install --save-dev uuid`
@@ -643,6 +650,7 @@ To add new tests:
 **Problem**: Allure report shows "No information about test execution"
 
 **Solution**: This is fixed by the `executor.json` file:
+
 - The custom reporter automatically generates this file
 - Verify `allure-results/executor.json` exists after running tests
 - Contains build name, timestamp, and optionally links to CI run
@@ -651,7 +659,8 @@ To add new tests:
 
 **Problem**: Tests fail in CI but pass locally
 
-**Solution**: 
+**Solution**:
+
 - Check Node.js version compatibility (project uses Node 20.x)
 - Ensure all dependencies are installed: `npm ci`
 - Clear Jest cache: `npx jest --clearCache`
@@ -659,6 +668,7 @@ To add new tests:
 **Problem**: Coverage report not generated
 
 **Solution**:
+
 ```bash
 npm run test:coverage
 # Report generated in coverage/ directory
