@@ -1,5 +1,7 @@
 """E2E tests for TODO List core functionality"""
+
 import pytest
+import allure
 from playwright.sync_api import Page, expect
 from tests.pages.todo_page import TodoPage
 
@@ -9,6 +11,7 @@ class TestAddTasks:
     """Test scenarios for adding tasks"""
     
     def test_add_task_with_default_values(self, todo_page: TodoPage, server_process):
+        with allure.step("Navigate to TO-DO list page"):
         """
         Scenario: Add a new task with default values
         Given I am on the TO-DO list page
@@ -20,21 +23,23 @@ class TestAddTasks:
         And the task should be highlighted in red
         """
         # Given
-        todo_page.navigate()
-        todo_page.wait_for_api_detection()
+            todo_page.navigate()
+            todo_page.wait_for_api_detection()
         
         # When
-        todo_page.task_name_input.fill("Buy groceries")
-        todo_page.add_button.click()
-        todo_page.page.wait_for_timeout(1000)  # Wait for task to be added via API
+        with allure.step("Add new task 'Buy groceries'"):
+            todo_page.task_name_input.fill("Buy groceries")
+            todo_page.add_button.click()
+            todo_page.page.wait_for_timeout(1000)  # Wait for task to be added via API
         
         # Then
-        assert todo_page.task_exists("Buy groceries"), "Task should exist in the list"
-        assert "1 (Low)" in todo_page.get_task_priority("Buy groceries")
-        status = todo_page.get_task_status("Buy groceries")
-        assert "not started" in status.lower(), f"Expected 'Not started' but got '{status}'"
-        assert todo_page.get_task_highlight_class("Buy groceries") == "red"
-        assert todo_page.get_task_name_input_value() == "", "Input should be cleared"
+        with allure.step("Verify task was added correctly"):
+            assert todo_page.task_exists("Buy groceries"), "Task should exist in the list"
+            assert "1 (Low)" in todo_page.get_task_priority("Buy groceries")
+            status = todo_page.get_task_status("Buy groceries")
+            assert "not started" in status.lower(), f"Expected 'Not started' but got '{status}'"
+            assert todo_page.get_task_highlight_class("Buy groceries") == "red"
+            assert todo_page.get_task_name_input_value() == "", "Input should be cleared"
     
     def test_add_task_with_high_priority_and_in_progress(self, todo_page: TodoPage, server_process):
         """

@@ -1,5 +1,7 @@
 """Pytest configuration and fixtures for E2E tests"""
+
 import pytest
+import allure
 from playwright.sync_api import Page, Browser, sync_playwright
 from tests.pages.todo_page import TodoPage
 import subprocess
@@ -12,26 +14,29 @@ import signal
 def browser():
     """Create a browser instance for the test session"""
     headless_env = os.getenv("HEADLESS", "true").lower() == "true"
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=headless_env)
-        yield browser
-        browser.close()
+    with allure.step("Launch Playwright browser"):
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=headless_env)
+            yield browser
+            browser.close()
 
 
 @pytest.fixture(scope="function")
 def page(browser: Browser):
     """Create a new page for each test"""
-    context = browser.new_context()
-    page = context.new_page()
-    yield page
-    page.close()
-    context.close()
+    with allure.step("Create new browser context and page"):
+        context = browser.new_context()
+        page = context.new_page()
+        yield page
+        page.close()
+        context.close()
 
 
 @pytest.fixture(scope="function")
 def todo_page(page: Page):
     """Create TodoPage object"""
-    return TodoPage(page)
+    with allure.step("Create TodoPage object"):
+        return TodoPage(page)
 
 
 @pytest.fixture(scope="session")
