@@ -131,6 +131,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Install Node.js dependencies for server
+        run: npm ci
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
