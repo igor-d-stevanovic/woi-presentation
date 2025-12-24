@@ -155,7 +155,14 @@ class AllureReporter {
   }
 
   getBuildOrder() {
-    // Get and increment build order for trend tracking
+    // Prefer GitHub Actions run number when available
+    if (process.env.GITHUB_RUN_NUMBER) {
+      const runNumber = parseInt(process.env.GITHUB_RUN_NUMBER, 10);
+      console.log(`[Allure] Using GitHub run number: ${runNumber}`);
+      return runNumber;
+    }
+
+    // Fallback to local build order file for local runs
     const buildOrderFile = path.join('.allure-build-order');
     let buildOrder = 1;
 
@@ -167,7 +174,7 @@ class AllureReporter {
       
       // Increment for next run
       fs.writeFileSync(buildOrderFile, (buildOrder + 1).toString());
-      console.log(`[Allure] Build order: ${buildOrder}`);
+      console.log(`[Allure] Local build order: ${buildOrder}`);
     } catch (error) {
       console.warn(`[Allure] Could not read/write build order: ${error.message}`);
     }
