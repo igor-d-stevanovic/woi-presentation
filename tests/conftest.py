@@ -1,5 +1,7 @@
 """Pytest configuration and fixtures for E2E tests"""
+
 import pytest
+import allure
 from playwright.sync_api import Page, Browser, sync_playwright
 from tests.pages.todo_page import TodoPage
 import subprocess
@@ -12,26 +14,29 @@ import signal
 def browser():
     """Create a browser instance for the test session"""
     headless_env = os.getenv("HEADLESS", "true").lower() == "true"
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=headless_env)
-        yield browser
-        browser.close()
+    with allure.step("Launch Playwright browser"):
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=headless_env)
+            yield browser
+            browser.close()
 
 
 @pytest.fixture(scope="function")
 def page(browser: Browser):
     """Create a new page for each test"""
-    context = browser.new_context()
-    page = context.new_page()
-    yield page
-    page.close()
-    context.close()
+    with allure.step("Create new browser context and page"):
+        context = browser.new_context()
+        page = context.new_page()
+        yield page
+        page.close()
+        context.close()
 
 
 @pytest.fixture(scope="function")
 def todo_page(page: Page):
     """Create TodoPage object"""
-    return TodoPage(page)
+    with allure.step("Create TodoPage object"):
+        return TodoPage(page)
 
 
 @pytest.fixture(scope="session")
@@ -59,21 +64,28 @@ def server_process():
         creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == 'nt' else 0
     )
     
-    # Wait for server to start
-    time.sleep(2)
-    
+    # Wait for server to start (increase to 5 seconds)
+    time.sleep(5)
+
     # Verify server is running
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     result = sock.connect_ex(('localhost', 3000))
     sock.close()
-    
+
     if result != 0:
+        # Print server stdout/stderr for debugging
+        try:
+            out, err = server.communicate(timeout=2)
+            print("\n--- server.js stdout ---\n", out.decode(errors="ignore"))
+            print("\n--- server.js stderr ---\n", err.decode(errors="ignore"))
+        except Exception as e:
+            print(f"Could not read server output: {e}")
         raise Exception("Failed to start server")
-    
+
     print("✅ Server started successfully")
-    
+
     yield server
-    
+
     # Cleanup: Stop the server
     print("\n🛑 Stopping server...")
     if os.name == 'nt':

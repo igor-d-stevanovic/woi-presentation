@@ -1,5 +1,7 @@
 """E2E tests for TODO List core functionality"""
+
 import pytest
+import allure
 from playwright.sync_api import Page, expect
 from tests.pages.todo_page import TodoPage
 
@@ -9,99 +11,85 @@ class TestAddTasks:
     """Test scenarios for adding tasks"""
     
     def test_add_task_with_default_values(self, todo_page: TodoPage, server_process):
-        """
-        Scenario: Add a new task with default values
-        Given I am on the TO-DO list page
-        When I enter "Buy groceries" in the task name field
-        And I click the "Add" button
-        Then I should see a new task "Buy groceries" in the list
-        And the task should have priority "1 (Low)"
-        And the task should have status "Not Started"
-        And the task should be highlighted in red
-        """
-        # Given
-        todo_page.navigate()
-        todo_page.wait_for_api_detection()
-        
+        # Scenario: Add a new task with default values
+        # Given I am on the TO-DO list page
+        # When I enter "Buy groceries" in the task name field
+        # And I click the "Add" button
+        # Then I should see a new task "Buy groceries" in the list
+        # And the task should have priority "1 (Low)"
+        # And the task should have status "Not Started"
+        # And the task should be highlighted in red
+        with allure.step("Navigate to TO-DO list page"):
+            todo_page.navigate()
+            todo_page.wait_for_api_detection()
         # When
-        todo_page.task_name_input.fill("Buy groceries")
-        todo_page.add_button.click()
-        todo_page.page.wait_for_timeout(1000)  # Wait for task to be added via API
-        
+        with allure.step("Add new task 'Buy groceries'"):
+            todo_page.task_name_input.fill("Buy groceries")
+            todo_page.add_button.click()
+            todo_page.page.wait_for_timeout(1000)  # Wait for task to be added via API
         # Then
-        assert todo_page.task_exists("Buy groceries"), "Task should exist in the list"
-        assert "1 (Low)" in todo_page.get_task_priority("Buy groceries")
-        status = todo_page.get_task_status("Buy groceries")
-        assert "not started" in status.lower(), f"Expected 'Not started' but got '{status}'"
-        assert todo_page.get_task_highlight_class("Buy groceries") == "red"
-        assert todo_page.get_task_name_input_value() == "", "Input should be cleared"
+        with allure.step("Verify task was added correctly"):
+            assert todo_page.task_exists("Buy groceries"), "Task should exist in the list"
+            assert "1 (Low)" in todo_page.get_task_priority("Buy groceries")
+            status = todo_page.get_task_status("Buy groceries")
+            assert "not started" in status.lower(), f"Expected 'Not started' but got '{status}'"
+            assert todo_page.get_task_highlight_class("Buy groceries") == "red"
+            assert todo_page.get_task_name_input_value() == "", "Input should be cleared"
     
     def test_add_task_with_high_priority_and_in_progress(self, todo_page: TodoPage, server_process):
-        """
-        Scenario: Add a task with high priority and in progress status
-        When I enter "Complete project presentation" in the task name field
-        And I select priority "3 (High)"
-        And I select status "In Progress"
-        And I click the "Add" button
-        Then the task should have priority "3 (High)"
-        And the task should have status "In Progress"
-        And the task should be highlighted in orange
-        """
-        # Given
-        todo_page.navigate()
-        todo_page.wait_for_api_detection()
-        
-        # When
-        todo_page.add_task("Complete project presentation", priority="3", status="in progress")
-        
-        # Then
-        assert todo_page.task_exists("Complete project presentation")
-        assert "3 (High)" in todo_page.get_task_priority("Complete project presentation")
-        assert "In progress" in todo_page.get_task_status("Complete project presentation")
-        assert todo_page.get_task_highlight_class("Complete project presentation") == "orange"
+        # Scenario: Add a task with high priority and in progress status
+        # When I enter "Complete project presentation" in the task name field
+        # And I select priority "3 (High)"
+        # And I select status "In Progress"
+        # And I click the "Add" button
+        # Then the task should have priority "3 (High)"
+        # And the task should have status "In Progress"
+        # And the task should be highlighted in orange
+        with allure.step("Navigate to TO-DO list page"):
+            todo_page.navigate()
+            todo_page.wait_for_api_detection()
+        with allure.step("Add high priority task in progress"):
+            todo_page.add_task("Complete project presentation", priority="3", status="in progress")
+        with allure.step("Verify task was added with correct priority and status"):
+            assert todo_page.task_exists("Complete project presentation")
+            assert "3 (High)" in todo_page.get_task_priority("Complete project presentation")
+            assert "In progress" in todo_page.get_task_status("Complete project presentation")
+            assert todo_page.get_task_highlight_class("Complete project presentation") == "orange"
     
     def test_add_task_using_enter_key(self, todo_page: TodoPage, server_process):
-        """
-        Scenario: Add task using Enter key
-        When I enter "Quick task" in the task name field
-        And I press the "Enter" key
-        Then a new task "Quick task" should be added to the list
-        """
-        # Given
-        todo_page.navigate()
-        todo_page.wait_for_api_detection()
-        
-        # When
-        todo_page.task_name_input.fill("Quick task")
-        todo_page.press_enter_on_input()
-        
-        # Then
-        assert todo_page.task_exists("Quick task")
-        assert "1 (Low)" in todo_page.get_task_priority("Quick task")
+        # Scenario: Add task using Enter key
+        # When I enter "Quick task" in the task name field
+        # And I press the "Enter" key
+        # Then a new task "Quick task" should be added to the list
+        with allure.step("Navigate to TO-DO list page"):
+            todo_page.navigate()
+            todo_page.wait_for_api_detection()
+        with allure.step("Fill task name and press Enter"):
+            todo_page.task_name_input.fill("Quick task")
+            todo_page.press_enter_on_input()
+        with allure.step("Verify task was added"):
+            assert todo_page.task_exists("Quick task")
+            assert "1 (Low)" in todo_page.get_task_priority("Quick task")
     
     def test_add_multiple_tasks_with_different_priorities(self, todo_page: TodoPage, server_process):
-        """
-        Scenario: Add multiple tasks with different priorities
-        When I add a task "Low priority task" with priority "1 (Low)"
-        And I add a task "Medium priority task" with priority "2 (Medium)"
-        And I add a task "High priority task" with priority "3 (High)"
-        Then I should see 3 tasks in the list
-        And all tasks should have different priority badges
-        """
-        # Given
-        todo_page.navigate()
-        todo_page.wait_for_api_detection()
-        
-        # When
-        todo_page.add_task("Low priority task", priority="1", status="not started")
-        todo_page.add_task("Medium priority task", priority="2", status="not started")
-        todo_page.add_task("High priority task", priority="3", status="not started")
-        
-        # Then
-        assert todo_page.get_task_count() == 3
-        assert "1 (Low)" in todo_page.get_task_priority("Low priority task")
-        assert "2 (Medium)" in todo_page.get_task_priority("Medium priority task")
-        assert "3 (High)" in todo_page.get_task_priority("High priority task")
+        # Scenario: Add multiple tasks with different priorities
+        # When I add a task "Low priority task" with priority "1 (Low)"
+        # And I add a task "Medium priority task" with priority "2 (Medium)"
+        # And I add a task "High priority task" with priority "3 (High)"
+        # Then I should see 3 tasks in the list
+        # And all tasks should have different priority badges
+        with allure.step("Navigate to TO-DO list page"):
+            todo_page.navigate()
+            todo_page.wait_for_api_detection()
+        with allure.step("Add multiple tasks with different priorities"):
+            todo_page.add_task("Low priority task", priority="1", status="not started")
+            todo_page.add_task("Medium priority task", priority="2", status="not started")
+            todo_page.add_task("High priority task", priority="3", status="not started")
+        with allure.step("Verify all tasks and priorities"):
+            assert todo_page.get_task_count() == 3
+            assert "1 (Low)" in todo_page.get_task_priority("Low priority task")
+            assert "2 (Medium)" in todo_page.get_task_priority("Medium priority task")
+            assert "3 (High)" in todo_page.get_task_priority("High priority task")
 
 
 @pytest.mark.ui
@@ -109,28 +97,24 @@ class TestTaskStatusHighlighting:
     """Test scenarios for status-based color highlighting"""
     
     def test_status_color_highlighting(self, todo_page: TodoPage, server_process):
-        """
-        Scenario: Task status color highlighting
-        When I add a task "Not Started Task" with status "Not Started"
-        And I add a task "In Progress Task" with status "In Progress"
-        And I add a task "Completed Task" with status "Completed"
-        Then the task "Not Started Task" should be highlighted in red
-        And the task "In Progress Task" should be highlighted in orange
-        And the task "Completed Task" should be highlighted in green
-        """
-        # Given
-        todo_page.navigate()
-        todo_page.wait_for_api_detection()
-        
-        # When
-        todo_page.add_task("Not Started Task", priority="1", status="not started")
-        todo_page.add_task("In Progress Task", priority="1", status="in progress")
-        todo_page.add_task("Completed Task", priority="1", status="completed")
-        
-        # Then
-        assert todo_page.get_task_highlight_class("Not Started Task") == "red"
-        assert todo_page.get_task_highlight_class("In Progress Task") == "orange"
-        assert todo_page.get_task_highlight_class("Completed Task") == "green"
+        # Scenario: Task status color highlighting
+        # When I add a task "Not Started Task" with status "Not Started"
+        # And I add a task "In Progress Task" with status "In Progress"
+        # And I add a task "Completed Task" with status "Completed"
+        # Then the task "Not Started Task" should be highlighted in red
+        # And the task "In Progress Task" should be highlighted in orange
+        # And the task "Completed Task" should be highlighted in green
+        with allure.step("Navigate to TO-DO list page"):
+            todo_page.navigate()
+            todo_page.wait_for_api_detection()
+        with allure.step("Add tasks with different statuses"):
+            todo_page.add_task("Not Started Task", priority="1", status="not started")
+            todo_page.add_task("In Progress Task", priority="1", status="in progress")
+            todo_page.add_task("Completed Task", priority="1", status="completed")
+        with allure.step("Verify color highlighting for each status"):
+            assert todo_page.get_task_highlight_class("Not Started Task") == "red"
+            assert todo_page.get_task_highlight_class("In Progress Task") == "orange"
+            assert todo_page.get_task_highlight_class("Completed Task") == "green"
 
 
 @pytest.mark.ui
@@ -138,62 +122,52 @@ class TestEditTasks:
     """Test scenarios for editing tasks"""
     
     def test_edit_task_priority_and_status(self, todo_page: TodoPage, server_process):
-        """
-        Scenario: Edit task priority and status
-        Given I have a task "Write documentation" with priority "1 (Low)" and status "Not Started"
-        When I click on the task
-        And I change the priority to "2 (Medium)"
-        And I change the status to "In Progress"
-        And I click "Save Changes"
-        Then the task should have priority "2 (Medium)"
-        And the task should have status "In Progress"
-        And the task should be highlighted in orange
-        """
-        # Given
-        todo_page.navigate()
-        todo_page.wait_for_api_detection()
-        todo_page.add_task("Write documentation", priority="1", status="not started")
-        
-        # When
-        todo_page.click_task("Write documentation")
-        todo_page.page.wait_for_timeout(500)  # Wait for edit controls to appear
-        todo_page.edit_task_priority("Write documentation", "2")
-        todo_page.edit_task_status("Write documentation", "in progress")
-        todo_page.save_task_changes("Write documentation")
-        todo_page.page.wait_for_timeout(500)  # Wait for save to complete
-        
-        # Then
-        assert "2 (Medium)" in todo_page.get_task_priority("Write documentation")
-        assert "In progress" in todo_page.get_task_status("Write documentation")
-        assert todo_page.get_task_highlight_class("Write documentation") == "orange"
+        # Scenario: Edit task priority and status
+        # Given I have a task "Write documentation" with priority "1 (Low)" and status "Not Started"
+        # When I click on the task
+        # And I change the priority to "2 (Medium)"
+        # And I change the status to "In Progress"
+        # And I click "Save Changes"
+        # Then the task should have priority "2 (Medium)"
+        # And the task should have status "In Progress"
+        # And the task should be highlighted in orange
+        with allure.step("Navigate to TO-DO list page"):
+            todo_page.navigate()
+            todo_page.wait_for_api_detection()
+            todo_page.add_task("Write documentation", priority="1", status="not started")
+        with allure.step("Edit task priority and status"):
+            todo_page.click_task("Write documentation")
+            todo_page.page.wait_for_timeout(500)  # Wait for edit controls to appear
+            todo_page.edit_task_priority("Write documentation", "2")
+            todo_page.edit_task_status("Write documentation", "in progress")
+            todo_page.save_task_changes("Write documentation")
+            todo_page.page.wait_for_timeout(500)  # Wait for save to complete
+        with allure.step("Verify task was updated"):
+            assert "2 (Medium)" in todo_page.get_task_priority("Write documentation")
+            assert "In progress" in todo_page.get_task_status("Write documentation")
+            assert todo_page.get_task_highlight_class("Write documentation") == "orange"
     
     def test_toggle_edit_mode(self, todo_page: TodoPage, server_process):
-        """
-        Scenario: Toggle edit mode on and off
-        Given I have a task "Sample task" in the list
-        When I click on the task
-        Then the edit controls should be displayed
-        When I click on the task again
-        Then the edit controls should be hidden
-        """
-        # Given
-        todo_page.navigate()
-        todo_page.wait_for_api_detection()
-        todo_page.add_task("Sample task")
-        
-        # When - First click
-        todo_page.click_task("Sample task")
-        todo_page.page.wait_for_timeout(300)
-        
-        # Then
-        assert todo_page.is_task_in_edit_mode("Sample task"), "Task should be in edit mode"
-        
-        # When - Second click
-        todo_page.click_task("Sample task")
-        todo_page.page.wait_for_timeout(300)
-        
-        # Then
-        assert not todo_page.is_task_in_edit_mode("Sample task"), "Task should not be in edit mode"
+        # Scenario: Toggle edit mode on and off
+        # Given I have a task "Sample task" in the list
+        # When I click on the task
+        # Then the edit controls should be displayed
+        # When I click on the task again
+        # Then the edit controls should be hidden
+        with allure.step("Navigate to TO-DO list page and add sample task"):
+            todo_page.navigate()
+            todo_page.wait_for_api_detection()
+            todo_page.add_task("Sample task")
+        with allure.step("Click task to enter edit mode"):
+            todo_page.click_task("Sample task")
+            todo_page.page.wait_for_timeout(300)
+        with allure.step("Verify task is in edit mode"):
+            assert todo_page.is_task_in_edit_mode("Sample task"), "Task should be in edit mode"
+        with allure.step("Click task again to exit edit mode"):
+            todo_page.click_task("Sample task")
+            todo_page.page.wait_for_timeout(300)
+        with allure.step("Verify task is not in edit mode"):
+            assert not todo_page.is_task_in_edit_mode("Sample task"), "Task should not be in edit mode"
 
 
 @pytest.mark.ui
