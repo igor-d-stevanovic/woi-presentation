@@ -1,35 +1,3 @@
-jobs:
-  python-e2e-tests:
-    name: Python Playwright E2E Tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Install Playwright browsers (Python)
-        run: python -m playwright install
-
-      - name: Run Python Playwright E2E tests with Allure
-        run: pytest --maxfail=1 --alluredir=allure-results
-
-      - name: Upload Allure results (Python E2E)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results-python-e2e
-          path: allure-results/
-          retention-days: 14
 name: CI - Unit Tests with Allure
 
 permissions:
@@ -49,26 +17,20 @@ jobs:
   unit-tests:
     name: Unit Tests (Jest)
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
           cache: "npm"
-
       - name: Install dependencies
         run: npm ci
-
       - name: Clean allure results
         run: rm -rf allure-results
-
       - name: Run unit tests with coverage (Jest)
         run: npm run test:unit:coverage
-
       - name: Debug - List allure results
         if: always()
         run: |
@@ -88,7 +50,6 @@ jobs:
           echo ""
           echo "=== Checking environment configuration ==="
           cat jest.config.js | grep -A 3 "testEnvironment"
-
       - name: Ensure Allure results exist
         if: always()
         run: |
@@ -96,7 +57,6 @@ jobs:
             echo "No Allure results were generated" >&2
             exit 1
           fi
-
       - name: Upload Allure results
         if: always()
         uses: actions/upload-artifact@v4
@@ -104,7 +64,6 @@ jobs:
           name: allure-results-unit
           path: allure-results/
           retention-days: 14
-
       - name: Upload coverage reports
         if: always() && hashFiles('coverage/**') != ''
         uses: actions/upload-artifact@v4
@@ -112,7 +71,6 @@ jobs:
           name: coverage-reports
           path: coverage/
           retention-days: 30
-
       - name: Upload test reports
         if: always() && hashFiles('test-reports/**') != ''
         uses: actions/upload-artifact@v4
@@ -120,27 +78,21 @@ jobs:
           name: test-reports-unit
           path: test-reports/
           retention-days: 30
-
   api-tests:
     name: API Tests (Jest)
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
           cache: "npm"
-
       - name: Install dependencies
         run: npm ci
-
       - name: Run API tests with coverage (Jest)
         run: npm run test:api:coverage
-
       - name: Upload Allure results (API)
         if: always()
         uses: actions/upload-artifact@v4
@@ -148,30 +100,24 @@ jobs:
           name: allure-results-api
           path: allure-results/
           retention-days: 14
-
   e2e-tests:
     name: Playwright E2E Tests
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
           cache: "npm"
-
       - name: Install dependencies
         run: npm ci
-
       - name: Install Playwright browsers
         run: npx playwright install
         shell: bash
       - name: Run Playwright E2E tests with Allure
         run: npm run test:e2e:pw:allure
-
       - name: Upload Allure results (E2E)
         if: always()
         uses: actions/upload-artifact@v4
@@ -179,50 +125,66 @@ jobs:
           name: allure-results-e2e
           path: allure-results/
           retention-days: 14
-
+  python-e2e-tests:
+    name: Python Playwright E2E Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Install Playwright browsers (Python)
+        run: python -m playwright install
+      - name: Run Python Playwright E2E tests with Allure
+        run: pytest --maxfail=1 --alluredir=allure-results
+      - name: Upload Allure results (Python E2E)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-python-e2e
+          path: allure-results/
+          retention-days: 14
   allure-report:
     name: Build Allure Report
     runs-on: ubuntu-latest
     needs: [unit-tests, api-tests, e2e-tests, python-e2e-tests]
     if: always()
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
           cache: "npm"
-
       - name: Install dependencies
         run: npm ci
-
       - name: Download Allure results (Unit)
         uses: actions/download-artifact@v4
         with:
           name: allure-results-unit
           path: allure-results
-
       - name: Download Allure results (API)
         uses: actions/download-artifact@v4
         with:
           name: allure-results-api
           path: allure-results
-
       - name: Download Allure results (E2E)
         uses: actions/download-artifact@v4
         with:
           name: allure-results-e2e
           path: allure-results
-
       - name: Download Allure results (Python E2E)
         uses: actions/download-artifact@v4
         with:
           name: allure-results-python-e2e
           path: allure-results
-
       - name: Download previous Allure history
         uses: dawidd6/action-download-artifact@v3
         continue-on-error: true
@@ -232,10 +194,8 @@ jobs:
           name: allure-history
           path: allure-results/history
           if_no_artifact_found: warn
-
       - name: Generate Allure report with history
         run: npx allure generate allure-results -o allure-report
-
       - name: Upload Allure history
         uses: actions/upload-artifact@v4
         with:
@@ -243,14 +203,12 @@ jobs:
           path: allure-report/history
           retention-days: 90
           if-no-files-found: ignore
-
       - name: Upload Allure report (for preview)
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report
           retention-days: 30
-
       # Deploy PR previews to GitHub Pages in dedicated pr-preview branch
       - name: Deploy Allure report preview for PR
         if: github.event_name == 'pull_request'
@@ -260,7 +218,6 @@ jobs:
           preview-branch: gh-pages
           umbrella-dir: pr-previews
           action: auto
-
       - name: Add PR preview link to summary
         if: github.event_name == 'pull_request'
         run: |
@@ -271,7 +228,6 @@ jobs:
           echo "Preview will be available in 1-2 minutes after GitHub Pages deployment completes." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "💡 _This preview includes code coverage data!_" >> $GITHUB_STEP_SUMMARY
-
       # Deploy main branch to root of gh-pages
       - name: Deploy to GitHub Pages (main branch)
         if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
@@ -282,7 +238,6 @@ jobs:
           publish_branch: gh-pages
           destination_dir: .
           keep_files: true # Keep pr-previews directory
-
       - name: Add Allure report link to summary
         if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         run: |
