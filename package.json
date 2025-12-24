@@ -11,6 +11,7 @@
     "test:api:coverage": "jest --config jest.api.config.js --coverage",
     "test:e2e": "pytest tests/ -v",
     "test:e2e:pw": "playwright test",
+  "test:e2e:pw:allure": "npm run allure:clean:keep-history && npm run test:e2e:pw && npm run allure:generate:preserve",
     "test:e2e:smoke": "pytest tests/ -v -m smoke",
     "test:e2e:ui": "pytest tests/ -v -m ui",
     "test:e2e:api": "pytest tests/ -v -m api",
