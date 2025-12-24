@@ -64,21 +64,28 @@ def server_process():
         creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == 'nt' else 0
     )
     
-    # Wait for server to start
-    time.sleep(2)
-    
+    # Wait for server to start (increase to 5 seconds)
+    time.sleep(5)
+
     # Verify server is running
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     result = sock.connect_ex(('localhost', 3000))
     sock.close()
-    
+
     if result != 0:
+        # Print server stdout/stderr for debugging
+        try:
+            out, err = server.communicate(timeout=2)
+            print("\n--- server.js stdout ---\n", out.decode(errors="ignore"))
+            print("\n--- server.js stderr ---\n", err.decode(errors="ignore"))
+        except Exception as e:
+            print(f"Could not read server output: {e}")
         raise Exception("Failed to start server")
-    
+
     print("✅ Server started successfully")
-    
+
     yield server
-    
+
     # Cleanup: Stop the server
     print("\n🛑 Stopping server...")
     if os.name == 'nt':
