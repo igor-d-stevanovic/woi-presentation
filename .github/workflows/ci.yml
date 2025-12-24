@@ -117,10 +117,38 @@ jobs:
           path: allure-results/
           retention-days: 14
 
+  e2e-tests:
+    name: Playwright E2E Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Playwright E2E tests with Allure
+        run: npm run test:e2e:pw:allure
+
+      - name: Upload Allure results (E2E)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-e2e
+          path: allure-results/
+          retention-days: 14
+
   allure-report:
     name: Build Allure Report
     runs-on: ubuntu-latest
-    needs: [unit-tests, api-tests]
+    needs: [unit-tests, api-tests, e2e-tests]
     if: always()
 
     steps:
@@ -146,6 +174,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: allure-results-api
+          path: allure-results
+
+      - name: Download Allure results (E2E)
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results-e2e
           path: allure-results
 
       - name: Download previous Allure history
