@@ -148,7 +148,7 @@ jobs:
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: allure-report
-          preview-branch: pr-preview
+          preview-branch: gh-pages
           umbrella-dir: pr-previews
           action: auto
 
