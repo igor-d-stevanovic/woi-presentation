@@ -159,10 +159,38 @@ jobs:
           name: allure-results-python-e2e
           path: allure-results/
           retention-days: 14
+  k6-performance:
+    name: K6 Performance Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "npm"
+      - name: Install dependencies
+        run: npm ci
+      - name: Install k6
+        run: |
+          curl -sSL https://github.com/grafana/k6/releases/download/v0.49.0/k6-v0.49.0-linux-amd64.tar.gz | tar -xz
+          sudo mv k6-v0.49.0-linux-amd64/k6 /usr/local/bin/k6
+          chmod +x /usr/local/bin/k6
+      - name: Run K6 performance tests
+        run: npm run perf:all
+      - name: Convert K6 results to Allure format
+        run: npm run perf:allure
+      - name: Upload Allure results (K6)
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-k6
+          path: allure-results/
+          retention-days: 14
   allure-report:
     name: Build Allure Report
     runs-on: ubuntu-latest
-    needs: [unit-tests, api-tests, e2e-tests, python-e2e-tests]
+    needs: [unit-tests, api-tests, e2e-tests, python-e2e-tests, k6-performance]
     if: always()
     steps:
       - name: Checkout code
@@ -193,6 +221,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: allure-results-python-e2e
+          path: allure-results
+      - name: Download Allure results (K6)
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results-k6
           path: allure-results
       - name: Download previous Allure history
         uses: dawidd6/action-download-artifact@v3
