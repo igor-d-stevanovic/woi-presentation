@@ -134,6 +134,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install Playwright browsers
+        run: npx playwright install
+        shell: bash
       - name: Run Playwright E2E tests with Allure
         run: npm run test:e2e:pw:allure
 
