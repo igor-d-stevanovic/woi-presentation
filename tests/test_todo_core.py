@@ -11,27 +11,22 @@ class TestAddTasks:
     """Test scenarios for adding tasks"""
     
     def test_add_task_with_default_values(self, todo_page: TodoPage, server_process):
+        # Scenario: Add a new task with default values
+        # Given I am on the TO-DO list page
+        # When I enter "Buy groceries" in the task name field
+        # And I click the "Add" button
+        # Then I should see a new task "Buy groceries" in the list
+        # And the task should have priority "1 (Low)"
+        # And the task should have status "Not Started"
+        # And the task should be highlighted in red
         with allure.step("Navigate to TO-DO list page"):
-        """
-        Scenario: Add a new task with default values
-        Given I am on the TO-DO list page
-        When I enter "Buy groceries" in the task name field
-        And I click the "Add" button
-        Then I should see a new task "Buy groceries" in the list
-        And the task should have priority "1 (Low)"
-        And the task should have status "Not Started"
-        And the task should be highlighted in red
-        """
-        # Given
             todo_page.navigate()
             todo_page.wait_for_api_detection()
-        
         # When
         with allure.step("Add new task 'Buy groceries'"):
             todo_page.task_name_input.fill("Buy groceries")
             todo_page.add_button.click()
             todo_page.page.wait_for_timeout(1000)  # Wait for task to be added via API
-        
         # Then
         with allure.step("Verify task was added correctly"):
             assert todo_page.task_exists("Buy groceries"), "Task should exist in the list"
@@ -42,16 +37,14 @@ class TestAddTasks:
             assert todo_page.get_task_name_input_value() == "", "Input should be cleared"
     
     def test_add_task_with_high_priority_and_in_progress(self, todo_page: TodoPage, server_process):
-        """
-        Scenario: Add a task with high priority and in progress status
-        When I enter "Complete project presentation" in the task name field
-        And I select priority "3 (High)"
-        And I select status "In Progress"
-        And I click the "Add" button
-        Then the task should have priority "3 (High)"
-        And the task should have status "In Progress"
-        And the task should be highlighted in orange
-        """
+        # Scenario: Add a task with high priority and in progress status
+        # When I enter "Complete project presentation" in the task name field
+        # And I select priority "3 (High)"
+        # And I select status "In Progress"
+        # And I click the "Add" button
+        # Then the task should have priority "3 (High)"
+        # And the task should have status "In Progress"
+        # And the task should be highlighted in orange
         # Given
         todo_page.navigate()
         todo_page.wait_for_api_detection()
@@ -66,12 +59,10 @@ class TestAddTasks:
         assert todo_page.get_task_highlight_class("Complete project presentation") == "orange"
     
     def test_add_task_using_enter_key(self, todo_page: TodoPage, server_process):
-        """
-        Scenario: Add task using Enter key
-        When I enter "Quick task" in the task name field
-        And I press the "Enter" key
-        Then a new task "Quick task" should be added to the list
-        """
+        # Scenario: Add task using Enter key
+        # When I enter "Quick task" in the task name field
+        # And I press the "Enter" key
+        # Then a new task "Quick task" should be added to the list
         # Given
         todo_page.navigate()
         todo_page.wait_for_api_detection()
@@ -85,14 +76,12 @@ class TestAddTasks:
         assert "1 (Low)" in todo_page.get_task_priority("Quick task")
     
     def test_add_multiple_tasks_with_different_priorities(self, todo_page: TodoPage, server_process):
-        """
-        Scenario: Add multiple tasks with different priorities
-        When I add a task "Low priority task" with priority "1 (Low)"
-        And I add a task "Medium priority task" with priority "2 (Medium)"
-        And I add a task "High priority task" with priority "3 (High)"
-        Then I should see 3 tasks in the list
-        And all tasks should have different priority badges
-        """
+        # Scenario: Add multiple tasks with different priorities
+        # When I add a task "Low priority task" with priority "1 (Low)"
+        # And I add a task "Medium priority task" with priority "2 (Medium)"
+        # And I add a task "High priority task" with priority "3 (High)"
+        # Then I should see 3 tasks in the list
+        # And all tasks should have different priority badges
         # Given
         todo_page.navigate()
         todo_page.wait_for_api_detection()
@@ -114,15 +103,13 @@ class TestTaskStatusHighlighting:
     """Test scenarios for status-based color highlighting"""
     
     def test_status_color_highlighting(self, todo_page: TodoPage, server_process):
-        """
-        Scenario: Task status color highlighting
-        When I add a task "Not Started Task" with status "Not Started"
-        And I add a task "In Progress Task" with status "In Progress"
-        And I add a task "Completed Task" with status "Completed"
-        Then the task "Not Started Task" should be highlighted in red
-        And the task "In Progress Task" should be highlighted in orange
-        And the task "Completed Task" should be highlighted in green
-        """
+        # Scenario: Task status color highlighting
+        # When I add a task "Not Started Task" with status "Not Started"
+        # And I add a task "In Progress Task" with status "In Progress"
+        # And I add a task "Completed Task" with status "Completed"
+        # Then the task "Not Started Task" should be highlighted in red
+        # And the task "In Progress Task" should be highlighted in orange
+        # And the task "Completed Task" should be highlighted in green
         # Given
         todo_page.navigate()
         todo_page.wait_for_api_detection()
@@ -143,17 +130,15 @@ class TestEditTasks:
     """Test scenarios for editing tasks"""
     
     def test_edit_task_priority_and_status(self, todo_page: TodoPage, server_process):
-        """
-        Scenario: Edit task priority and status
-        Given I have a task "Write documentation" with priority "1 (Low)" and status "Not Started"
-        When I click on the task
-        And I change the priority to "2 (Medium)"
-        And I change the status to "In Progress"
-        And I click "Save Changes"
-        Then the task should have priority "2 (Medium)"
-        And the task should have status "In Progress"
-        And the task should be highlighted in orange
-        """
+        # Scenario: Edit task priority and status
+        # Given I have a task "Write documentation" with priority "1 (Low)" and status "Not Started"
+        # When I click on the task
+        # And I change the priority to "2 (Medium)"
+        # And I change the status to "In Progress"
+        # And I click "Save Changes"
+        # Then the task should have priority "2 (Medium)"
+        # And the task should have status "In Progress"
+        # And the task should be highlighted in orange
         # Given
         todo_page.navigate()
         todo_page.wait_for_api_detection()
@@ -173,14 +158,12 @@ class TestEditTasks:
         assert todo_page.get_task_highlight_class("Write documentation") == "orange"
     
     def test_toggle_edit_mode(self, todo_page: TodoPage, server_process):
-        """
-        Scenario: Toggle edit mode on and off
-        Given I have a task "Sample task" in the list
-        When I click on the task
-        Then the edit controls should be displayed
-        When I click on the task again
-        Then the edit controls should be hidden
-        """
+        # Scenario: Toggle edit mode on and off
+        # Given I have a task "Sample task" in the list
+        # When I click on the task
+        # Then the edit controls should be displayed
+        # When I click on the task again
+        # Then the edit controls should be hidden
         # Given
         todo_page.navigate()
         todo_page.wait_for_api_detection()
