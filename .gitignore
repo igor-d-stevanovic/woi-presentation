@@ -20,6 +20,8 @@ htmlcov/
 allure-results/
 allure-report/
 test-reports/
+.allure-build-order
+.allure-history-temp
 
 # Environment
 .env

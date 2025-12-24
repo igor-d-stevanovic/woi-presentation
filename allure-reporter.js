@@ -154,6 +154,27 @@ class AllureReporter {
     }
   }
 
+  getBuildOrder() {
+    // Get and increment build order for trend tracking
+    const buildOrderFile = path.join('.allure-build-order');
+    let buildOrder = 1;
+
+    try {
+      if (fs.existsSync(buildOrderFile)) {
+        const content = fs.readFileSync(buildOrderFile, 'utf8');
+        buildOrder = parseInt(content.trim(), 10) || 1;
+      }
+      
+      // Increment for next run
+      fs.writeFileSync(buildOrderFile, (buildOrder + 1).toString());
+      console.log(`[Allure] Build order: ${buildOrder}`);
+    } catch (error) {
+      console.warn(`[Allure] Could not read/write build order: ${error.message}`);
+    }
+
+    return buildOrder;
+  }
+
   onRunComplete() {
     // Write environment info
     const envInfo = {
@@ -203,11 +224,15 @@ class AllureReporter {
       console.error(`[Allure] Failed to write categories.json: ${error.message}`);
     }
 
+    // Get build order for trend tracking
+    const buildOrder = this.getBuildOrder();
+
     // Write executor info for better execution tracking
     const executor = {
       name: 'Jest',
       type: 'jest',
-      buildName: `Test Run ${new Date().toISOString()}`,
+      buildOrder: buildOrder,
+      buildName: `Test Run #${buildOrder}`,
       buildUrl: process.env.GITHUB_SERVER_URL && process.env.GITHUB_REPOSITORY && process.env.GITHUB_RUN_ID
         ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
         : undefined,
