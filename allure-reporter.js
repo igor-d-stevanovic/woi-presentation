@@ -217,11 +217,57 @@ class AllureReporter {
     const executorPath = path.join(this.resultsDir, 'executor.json');
     try {
       fs.writeFileSync(executorPath, JSON.stringify(executor, null, 2));
+      
+      // Attach coverage summary if available
+      this.attachCoverageSummary();
+      
       console.log(`[Allure] Results written to ${this.resultsDir}/`);
       console.log(`[Allure] Files created: ${fs.readdirSync(this.resultsDir).length}`);
     } catch (error) {
       console.error(`[Allure] Failed to write executor.json: ${error.message}`);
     }
+  }
+
+  attachCoverageSummary() {
+    // Coverage files are written after reporters complete, so we need to wait
+    setTimeout(() => {
+      const coverageSummaryPath = path.join('coverage', 'coverage-summary.json');
+      
+      if (!fs.existsSync(coverageSummaryPath)) {
+        console.log('[Allure] No coverage data found, skipping coverage attachment');
+        return;
+      }
+
+      try {
+        const coverageData = JSON.parse(fs.readFileSync(coverageSummaryPath, 'utf8'));
+        const total = coverageData.total;
+        
+        // Create a coverage attachment file
+        const coverageAttachment = {
+          name: 'Code Coverage Summary',
+          lines: total.lines,
+          statements: total.statements,
+          functions: total.functions,
+          branches: total.branches
+        };
+        
+        const attachmentPath = path.join(this.resultsDir, 'coverage-summary-attachment.json');
+        fs.writeFileSync(attachmentPath, JSON.stringify(coverageAttachment, null, 2));
+        
+        // Update environment.properties with coverage data
+        const envPath = path.join(this.resultsDir, 'environment.properties');
+        let envContent = fs.readFileSync(envPath, 'utf8');
+        envContent += `\nCoverage Lines=${total.lines.pct}%`;
+        envContent += `\nCoverage Statements=${total.statements.pct}%`;
+        envContent += `\nCoverage Functions=${total.functions.pct}%`;
+        envContent += `\nCoverage Branches=${total.branches.pct}%`;
+        fs.writeFileSync(envPath, envContent);
+        
+        console.log(`[Allure] Coverage data attached: ${total.lines.pct}% lines, ${total.statements.pct}% statements`);
+      } catch (error) {
+        console.error(`[Allure] Failed to attach coverage: ${error.message}`);
+      }
+    }, 1000); // Wait 1 second for coverage files to be written
   }
 
   getStatus(jestStatus) {

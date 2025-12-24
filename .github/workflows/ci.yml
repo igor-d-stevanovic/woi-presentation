@@ -34,8 +34,8 @@ jobs:
       - name: Clean allure results
         run: rm -rf allure-results
 
-      - name: Run unit tests (Jest)
-        run: npm run test:unit
+      - name: Run unit tests with coverage (Jest)
+        run: npm run test:unit:coverage
 
       - name: Debug - List allure results
         if: always()
@@ -148,9 +148,20 @@ jobs:
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: allure-report
-          preview-branch: pr-preview
+          preview-branch: gh-pages
           umbrella-dir: pr-previews
           action: auto
+
+      - name: Add PR preview link to summary
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "### 🎉 Allure Report PR Preview Ready!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📊 **View Report:** https://igor-d-stevanovic.github.io/woi-presentation/pr-previews/pr-${{ github.event.pull_request.number }}/" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Preview will be available in 1-2 minutes after GitHub Pages deployment completes." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "💡 _This preview includes code coverage data!_" >> $GITHUB_STEP_SUMMARY
 
       # Deploy main branch to root of gh-pages
       - name: Deploy to GitHub Pages (main branch)
