@@ -178,7 +178,7 @@ jobs:
           sudo mv k6-v0.49.0-linux-amd64/k6 /usr/local/bin/k6
           chmod +x /usr/local/bin/k6
       - name: Run K6 performance tests
-        run: npm run perf:all
+        run: npm run perf:local
       - name: Convert K6 results to Allure format
         run: npm run perf:allure
       - name: Upload Allure results (K6)
